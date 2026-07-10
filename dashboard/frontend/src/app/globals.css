@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #06070a;
+  --foreground: #e6eef7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(103, 232, 249, 0.32);
+  color: #ffffff;
+}
+
+html {
+  color-scheme: dark;
+  scrollbar-color: rgba(148, 163, 184, 0.45) rgba(2, 6, 23, 0.6);
+}
+
+button {
+  font: inherit;
+}
