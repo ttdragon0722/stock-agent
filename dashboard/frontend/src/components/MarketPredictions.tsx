@@ -1,7 +1,13 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
 import type { PredictionRow } from "@/lib/types";
 
+type MarketId = "tw" | "crypto";
+
 type MarketGroup = {
-  id: "tw" | "crypto";
+  id: MarketId;
   title: string;
   subtitle: string;
   rows: PredictionRow[];
@@ -91,7 +97,8 @@ function formatValue(value: number | null | undefined, compact = false) {
 
 function formatRange(value: number[] | null | undefined) {
   if (!value?.length) return "--";
-  return value.map((item) => formatValue(item, value.some((n) => n >= 10000))).join(" - ");
+  const compact = value.some((item) => item >= 10000);
+  return value.map((item) => formatValue(item, compact)).join(" - ");
 }
 
 function formatDate(value: string) {
@@ -173,9 +180,9 @@ function MarketTable({ group }: { group: MarketGroup }) {
   const due = group.rows.filter((row) => row.verifiable_now).length;
 
   return (
-    <section className="rounded-[8px] border border-white/10 bg-white/[0.035]">
+    <section className="min-w-0 rounded-[8px] border border-white/10 bg-white/[0.035]">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-4">
-        <div>
+        <div className="min-w-0">
           <h3 className="text-base font-semibold text-white">{group.title}</h3>
           <p className="mt-1 text-sm text-slate-500">{group.subtitle}</p>
         </div>
@@ -199,7 +206,7 @@ function MarketTable({ group }: { group: MarketGroup }) {
         <p className="px-4 py-8 text-sm text-slate-500">此區目前沒有資料。</p>
       ) : (
         <>
-          <div className="hidden overflow-x-auto md:block">
+          <div className="hidden min-w-0 overflow-x-auto md:block">
             <table className="w-full min-w-[980px] text-left text-sm">
               <thead className="border-b border-white/10 bg-black/20 text-xs text-slate-500">
                 <tr>
@@ -282,8 +289,8 @@ function MarketTable({ group }: { group: MarketGroup }) {
                 className="rounded-[8px] border border-white/10 bg-black/20 p-3"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h4 className="font-semibold text-white">{row.asset}</h4>
+                  <div className="min-w-0">
+                    <h4 className="truncate font-semibold text-white">{row.asset}</h4>
                     <p className="mt-1 text-xs text-slate-500">
                       {row.question_type.replaceAll("_", " ")}
                     </p>
@@ -335,20 +342,25 @@ function MarketTable({ group }: { group: MarketGroup }) {
 }
 
 export default function MarketPredictions({ rows }: { rows: PredictionRow[] }) {
-  const groups: MarketGroup[] = [
-    {
-      id: "tw",
-      title: "台股",
-      subtitle: "以交易日節奏檢視進出場價位與驗證期限",
-      rows: rows.filter((row) => !isCryptoAsset(row.asset)),
-    },
-    {
-      id: "crypto",
-      title: "加密貨幣",
-      subtitle: "適合 24/7 市場的快速風險掃描",
-      rows: rows.filter((row) => isCryptoAsset(row.asset)),
-    },
-  ];
+  const groups = useMemo<MarketGroup[]>(
+    () => [
+      {
+        id: "tw",
+        title: "台股",
+        subtitle: "以交易日節奏檢視進出場價位與驗證期限",
+        rows: rows.filter((row) => !isCryptoAsset(row.asset)),
+      },
+      {
+        id: "crypto",
+        title: "加密貨幣",
+        subtitle: "適合 24/7 市場的快速風險掃描",
+        rows: rows.filter((row) => isCryptoAsset(row.asset)),
+      },
+    ],
+    [rows],
+  );
+  const [activeMarket, setActiveMarket] = useState<MarketId>("tw");
+  const activeGroup = groups.find((group) => group.id === activeMarket) ?? groups[0];
 
   if (!rows.length) {
     return (
@@ -359,10 +371,27 @@ export default function MarketPredictions({ rows }: { rows: PredictionRow[] }) {
   }
 
   return (
-    <div className="grid gap-4">
-      {groups.map((group) => (
-        <MarketTable key={group.id} group={group} />
-      ))}
+    <div className="min-w-0 space-y-3">
+      <div className="flex flex-wrap gap-2 rounded-[8px] border border-white/10 bg-black/20 p-2" role="tablist" aria-label="市場分類">
+        {groups.map((group) => (
+          <button
+            key={group.id}
+            type="button"
+            role="tab"
+            aria-selected={activeMarket === group.id}
+            onClick={() => setActiveMarket(group.id)}
+            className={`min-h-10 rounded-[6px] border px-4 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950 ${
+              activeMarket === group.id
+                ? "border-cyan-300/40 bg-cyan-300/15 text-cyan-100"
+                : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.045] hover:text-slate-100"
+            }`}
+          >
+            {group.title}
+            <span className="ml-2 font-mono text-xs text-slate-500">{group.rows.length}</span>
+          </button>
+        ))}
+      </div>
+      <MarketTable group={activeGroup} />
     </div>
   );
 }

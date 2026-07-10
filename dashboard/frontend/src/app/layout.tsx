@@ -17,13 +17,6 @@ export const metadata: Metadata = {
   description: "台股與加密貨幣決策儀表板",
 };
 
-/*
-const legacyMetadata: Metadata = {
-  title: "Invest Advisor Dashboard",
-  description: "預測日誌、驗證結果與歷史決策報告總覽",
-};
-*/
-
 export default function RootLayout({
   children,
 }: Readonly<{

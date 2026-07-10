@@ -57,7 +57,7 @@ export default function PerformanceCards({ stats }: { stats: Stats | null }) {
                 M{index + 1}
               </span>
             </div>
-            <p className="mt-3 font-mono text-2xl font-semibold tracking-normal text-slate-50">
+            <p className="mt-3 font-mono text-2xl font-semibold text-slate-50">
               {card.value}
             </p>
             <p className="mt-2 text-xs leading-5 text-slate-500">{card.detail}</p>

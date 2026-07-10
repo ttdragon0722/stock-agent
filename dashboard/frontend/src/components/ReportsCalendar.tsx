@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -74,23 +75,14 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
   );
 
   const latestDate = sortedReports[0] ? getReportDate(sortedReports[0]) : new Date();
-  const [monthDate, setMonthDate] = useState(
-    new Date(latestDate.getFullYear(), latestDate.getMonth(), 1),
-  );
-  const [selectedDay, setSelectedDay] = useState<string | null>(
-    sortedReports[0] ? dateKey(getReportDate(sortedReports[0])) : null,
-  );
+  const latestMonth = new Date(latestDate.getFullYear(), latestDate.getMonth(), 1);
+  const latestDayKey = sortedReports[0] ? dateKey(latestDate) : null;
+  const [monthDate, setMonthDate] = useState<Date | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [markdown, setMarkdown] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!sortedReports.length) return;
-    const latest = getReportDate(sortedReports[0]);
-    setMonthDate(new Date(latest.getFullYear(), latest.getMonth(), 1));
-    setSelectedDay(dateKey(latest));
-  }, [sortedReports]);
 
   const reportsByDay = useMemo(() => {
     const map = new Map<string, ReportInfo[]>();
@@ -103,8 +95,13 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
     return map;
   }, [sortedReports]);
 
-  const selectedReports = selectedDay ? reportsByDay.get(selectedDay) ?? [] : [];
-  const calendarDays = buildCalendar(monthDate);
+  const visibleMonth = monthDate ?? latestMonth;
+  const activeDay = selectedDay ?? latestDayKey;
+  const selectedReports = useMemo(
+    () => (activeDay ? reportsByDay.get(activeDay) ?? [] : []),
+    [activeDay, reportsByDay],
+  );
+  const calendarDays = buildCalendar(visibleMonth);
 
   const openReport = async (report: ReportInfo) => {
     setSelected(report.name);
@@ -121,29 +118,24 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
     }
   };
 
-  useEffect(() => {
-    if (!selected && selectedReports[0]) {
-      void openReport(selectedReports[0]);
-    }
-  }, [selected, selectedReports]);
-
   const changeMonth = (offset: number) => {
-    setMonthDate(
-      (current) => new Date(current.getFullYear(), current.getMonth() + offset, 1),
-    );
+    setMonthDate((current) => {
+      const base = current ?? visibleMonth;
+      return new Date(base.getFullYear(), base.getMonth() + offset, 1);
+    });
   };
 
-  if (!reports.length) {
-    return (
-      <div className="rounded-[8px] border border-white/10 bg-white/[0.035] px-4 py-10 text-center text-sm text-slate-500">
-        尚未產生決策報告。
-      </div>
-    );
-  }
+  const sidebarTarget =
+    typeof document === "undefined"
+      ? null
+      : document.getElementById("report-calendar-sidebar");
 
-  return (
-    <div className="grid gap-4 xl:grid-cols-[460px_1fr]">
-      <div className="rounded-[8px] border border-white/10 bg-white/[0.035]">
+  const sidebar = (
+    <aside className="min-w-0 overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.035]">
+      {!reports.length ? (
+        <div className="px-4 py-8 text-sm text-slate-500">尚未產生決策報告。</div>
+      ) : (
+        <>
         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-4">
           <button
             type="button"
@@ -153,7 +145,7 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
           >
             上月
           </button>
-          <h3 className="text-base font-semibold text-white">{formatMonth(monthDate)}</h3>
+          <h3 className="text-base font-semibold text-white">{formatMonth(visibleMonth)}</h3>
           <button
             type="button"
             onClick={() => changeMonth(1)}
@@ -176,17 +168,24 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
           {calendarDays.map((day) => {
             const key = dateKey(day);
             const dayReports = reportsByDay.get(key) ?? [];
-            const inMonth = day.getMonth() === monthDate.getMonth();
-            const active = selectedDay === key;
+            const inMonth = day.getMonth() === visibleMonth.getMonth();
+            const active = activeDay === key;
             return (
               <button
                 key={key}
                 type="button"
                 onClick={() => {
                   setSelectedDay(key);
-                  if (dayReports[0]) void openReport(dayReports[0]);
+                  if (dayReports[0]) {
+                    void openReport(dayReports[0]);
+                  } else {
+                    setSelected(null);
+                    setMarkdown("");
+                    setError(null);
+                    setLoading(false);
+                  }
                 }}
-                className={`min-h-[82px] border-b border-r border-white/10 p-2 text-left transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-200 ${
+                className={`h-[82px] min-w-0 overflow-hidden border-b border-r border-white/10 p-2 text-left transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-200 ${
                   active
                     ? "bg-cyan-300/12"
                     : dayReports.length
@@ -209,22 +208,20 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
             );
           })}
         </div>
-      </div>
 
-      <div className="rounded-[8px] border border-white/10 bg-white/[0.035]">
-        <div className="grid gap-4 border-b border-white/10 p-4 lg:grid-cols-[260px_1fr]">
-          <div>
+        <div className="grid min-w-0 gap-4 border-t border-white/10 p-4">
+          <div className="min-w-0">
             <p className="text-xs text-slate-500">選取日期</p>
-            <p className="mt-1 font-mono text-lg text-white">{selectedDay ?? "--"}</p>
+            <p className="mt-1 truncate font-mono text-lg text-white">{activeDay ?? "--"}</p>
           </div>
-          <div className="flex flex-wrap gap-2 lg:justify-end">
+          <div className="grid max-h-48 min-w-0 gap-2 overflow-y-auto pr-1">
             {selectedReports.length ? (
               selectedReports.map((report) => (
                 <button
                   key={report.name}
                   type="button"
                   onClick={() => openReport(report)}
-                  className={`min-h-9 max-w-full truncate rounded-[6px] border px-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950 ${
+                  className={`min-h-10 w-full truncate rounded-[6px] border px-3 text-left text-sm transition focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950 ${
                     selected === report.name
                       ? "border-cyan-300/40 bg-cyan-300/15 text-cyan-100"
                       : "border-white/10 text-slate-300 hover:border-cyan-300/30"
@@ -239,20 +236,42 @@ export default function ReportsCalendar({ reports }: { reports: ReportInfo[] }) 
             )}
           </div>
         </div>
+        </>
+      )}
+    </aside>
+  );
 
-        <div className="min-h-[420px] p-4">
+  return (
+    <>
+      {sidebarTarget ? createPortal(sidebar, sidebarTarget) : null}
+      <div className="min-w-0 overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.035]">
+        <div className="flex min-w-0 items-center justify-between gap-3 border-b border-white/10 p-4">
+          <div className="min-w-0">
+            <p className="text-xs text-slate-500">目前報告</p>
+            <p className="mt-1 truncate text-sm font-medium text-slate-200">
+              {selected ?? "尚未選取報告"}
+            </p>
+          </div>
+          {selected && (
+            <span className="hidden rounded-[6px] border border-cyan-300/25 bg-cyan-300/10 px-2 py-1 text-xs text-cyan-100 sm:inline-flex">
+              Markdown
+            </span>
+          )}
+        </div>
+
+        <div className="min-h-[420px] min-w-0 overflow-hidden p-4">
           {loading && <p className="text-sm text-slate-500">載入報告中...</p>}
           {error && <p className="text-sm text-rose-100">{error}</p>}
           {!loading && !error && !selected && (
             <p className="text-sm text-slate-500">請從日曆選擇一份決策報告。</p>
           )}
           {markdown && (
-            <article className="prose prose-invert prose-sm max-w-none overflow-x-auto prose-headings:text-white prose-a:text-cyan-200 prose-table:text-xs prose-th:border-white/10 prose-td:border-white/10">
+            <article className="prose prose-invert prose-sm max-w-none overflow-x-auto prose-headings:text-white prose-a:text-cyan-200 prose-table:text-xs prose-th:border-white/10 prose-td:border-white/10 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
             </article>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
