@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="1150" viewBox="0 0 880 1150" font-family="ui-sans-serif, system-ui, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b7a9e"/>
+    </marker>
+    <marker id="arrow-loop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b45309"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="1150" rx="12" fill="#f8fafc" stroke="#d7dee6"/>
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f2a3a">invest-advisor 問答流程</text>
+
+  <!-- 使用者提問 -->
+  <rect x="180" y="66" width="520" height="64" rx="32" fill="#0f2a3a"/>
+  <text x="440" y="93" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">使用者以自然語言提問</text>
+  <text x="440" y="115" text-anchor="middle" font-size="13" fill="#bcd7e6">「現在能買 2330 嗎?」「BTC 點位怎麼看?」——不需任何指令,skill 自動觸發</text>
+  <line x1="440" y1="130" x2="440" y2="156" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 1 -->
+  <rect x="180" y="158" width="520" height="76" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="186" font-size="15" font-weight="700" fill="#0f2a3a">Step 1｜問題分類</text>
+  <text x="204" y="208" font-size="13" fill="#334155">判定屬於 Q1 短期買進 / Q2 長期持有 / Q3 標的推薦 / Q4 點位分析 / Q5 資產配置,</text>
+  <text x="204" y="226" font-size="13" fill="#334155">讀 references/question-types.md 取得該類專屬流程</text>
+  <line x1="440" y1="234" x2="440" y2="260" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 1.5 -->
+  <rect x="180" y="262" width="520" height="76" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="290" font-size="15" font-weight="700" fill="#0f2a3a">Step 1.5｜歷史回顧(recall_history.py)</text>
+  <text x="204" y="312" font-size="13" fill="#334155">查同一標的過去的預測、WIN/LOSS 結果與歷史報告;</text>
+  <text x="204" y="330" font-size="13" fill="#334155">有紀錄時報告必含「與上次觀點的差異」,無新事實的觀點翻轉會扣信心分</text>
+  <line x1="440" y1="338" x2="440" y2="364" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <rect x="180" y="366" width="520" height="112" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="394" font-size="15" font-weight="700" fill="#0f2a3a">Step 2｜資訊蒐集(本地優先 → 網路補足)</text>
+  <text x="204" y="416" font-size="13" fill="#334155">Freshness Gate:本地快取未過期直接用,過期或缺才現抓。</text>
+  <text x="204" y="434" font-size="13" fill="#334155">fetch_ohlcv 抓 K 線(含 benchmark)→ compute_ta 確定性計算技術指標;</text>
+  <text x="204" y="452" font-size="13" fill="#334155">台股另跑 fetch_chips(法人籌碼)+ fetch_mops(官方公告/月營收);</text>
+  <text x="204" y="470" font-size="13" fill="#334155">WebSearch 3–8 次(至少 1 次反向查詢)+ cache_news 讀寫新聞快取</text>
+  <line x1="440" y1="478" x2="440" y2="504" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3 -->
+  <rect x="180" y="506" width="520" height="58" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="532" font-size="15" font-weight="700" fill="#0f2a3a">Step 3｜交叉驗證</text>
+  <text x="204" y="552" font-size="13" fill="#334155">關鍵數字(現價、財報)至少 2 個獨立來源;衝突時並列出處、採保守值</text>
+  <line x1="440" y1="564" x2="440" y2="590" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3.5 -->
+  <rect x="180" y="592" width="520" height="76" rx="10" fill="#fdf2e3" stroke="#b45309" stroke-width="1.5"/>
+  <text x="204" y="620" font-size="15" font-weight="700" fill="#7c3a03">Step 3.5｜多空對辯(評分前必做)</text>
+  <text x="204" y="642" font-size="13" fill="#4b3621">強制寫出多頭最強論點 ×3 vs 空頭最強論點 ×3(每條附證據、禁止稻草人),</text>
+  <text x="204" y="660" font-size="13" fill="#4b3621">再做裁決;分不出強弱 = 訊號矛盾 → 信心指數調降</text>
+  <line x1="440" y1="668" x2="440" y2="694" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 4 -->
+  <rect x="180" y="696" width="520" height="76" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="724" font-size="15" font-weight="700" fill="#0f2a3a">Step 4｜綜合評分(scoring-rubric.md)</text>
+  <text x="204" y="746" font-size="13" fill="#334155">消息/技術/基本面/宏觀 四維度 1–100 加權 → 推薦指數;</text>
+  <text x="204" y="764" font-size="13" fill="#334155">信心指數獨立計算(資訊完整度 × 訊號一致性);R:R &lt; 1.5 必須建議等待</text>
+  <line x1="440" y1="772" x2="440" y2="798" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 5 -->
+  <rect x="180" y="800" width="520" height="76" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="828" font-size="15" font-weight="700" fill="#0f2a3a">Step 5｜產出決策報告</text>
+  <text x="204" y="850" font-size="13" fill="#334155">Markdown 報告:四維度分數、多空對辯與裁決、失效條件、參考資料來源清單;</text>
+  <text x="204" y="868" font-size="13" fill="#334155">同步存檔至 invest-advisor/data/reports/&lt;日期&gt;_&lt;主題&gt;_&lt;題型&gt;.md</text>
+  <line x1="440" y1="876" x2="440" y2="902" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 6 -->
+  <rect x="180" y="904" width="520" height="58" rx="10" fill="#e8f3f9" stroke="#2b7a9e" stroke-width="1.5"/>
+  <text x="204" y="930" font-size="15" font-weight="700" fill="#0f2a3a">Step 6｜寫入預測日誌(log_prediction.py)</text>
+  <text x="204" y="950" font-size="13" fill="#334155">報告尾端的 prediction-meta → predictions.jsonl(append-only,禁止改動)</text>
+  <line x1="440" y1="962" x2="440" y2="988" stroke="#2b7a9e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 驗證迴圈 -->
+  <rect x="180" y="990" width="520" height="112" rx="10" fill="#eaf6ec" stroke="#1a7f37" stroke-width="1.5"/>
+  <text x="204" y="1018" font-size="15" font-weight="700" fill="#14532d">事後驗證迴圈(讓時間對答案)</text>
+  <text x="204" y="1040" font-size="13" fill="#2f4a37">verify_predictions.py --fetch:到期後判定 WIN/LOSS/FLAT/NOT_FILLED,</text>
+  <text x="204" y="1058" font-size="13" fill="#2f4a37">統計勝率、期望值(R)與對 benchmark(SPY / BTC)的超額報酬;</text>
+  <text x="204" y="1076" font-size="13" fill="#2f4a37">Dashboard 總覽預測狀態與到期倒數;calibration_report.py 檢驗信心校準,</text>
+  <text x="204" y="1094" font-size="13" fill="#2f4a37">發現系統性偏差 → 調整 scoring-rubric 權重並遞增版本號</text>
+
+  <!-- feedback loop -->
+  <path d="M 700 1046 L 762 1046 L 762 300 L 706 300" fill="none" stroke="#b45309" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-loop)"/>
+  <text x="778" y="660" font-size="13" fill="#b45309" transform="rotate(90 778 660)" text-anchor="middle">判定結果回饋下一次的歷史回顧</text>
+</svg>
