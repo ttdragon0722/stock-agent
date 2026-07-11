@@ -1,7 +1,7 @@
 """API tests using FastAPI TestClient (no server needed)."""
 from fastapi.testclient import TestClient
 
-from main import app
+from main import app, cors_origins
 
 client = TestClient(app)
 
@@ -59,3 +59,21 @@ class TestReportPathGuard:
 
     def test_missing_report_404(self):
         assert client.get("/api/reports/nope.md").status_code == 404
+
+
+class TestCloudDeploy:
+    def test_cors_origins_default(self):
+        assert cors_origins("") == ["http://localhost:3000",
+                                    "http://127.0.0.1:3000"]
+
+    def test_cors_origins_extra_domains(self):
+        origins = cors_origins(
+            "https://stock-agent.vercel.app/, https://example.com")
+        assert "https://stock-agent.vercel.app" in origins
+        assert "https://example.com" in origins
+        assert "http://localhost:3000" in origins
+
+    def test_verify_disabled_on_vercel(self, monkeypatch):
+        monkeypatch.setenv("VERCEL", "1")
+        r = client.post("/api/verify?fetch=false")
+        assert r.status_code == 501

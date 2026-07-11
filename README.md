@@ -275,10 +275,26 @@ python dashboard.py --text   # 不開瀏覽器,終端印精簡表格
 內容與 Web 版等價:預測總表(狀態/到期倒數/報酬率)、到期提醒橫幅、
 歷史報告清單。
 
+### 部署到 Vercel(手機隨時查看報告)
+
+repo 已內建部署設定(根目錄 `api/index.py` + `vercel.json` +
+`requirements.txt`)。在 Vercel 建**兩個專案**連同一個 repo:
+
+1. **API 專案**:Root Directory 留空、Framework 選 Other,環境變數
+   `DASHBOARD_CORS_ORIGINS` 填前端網域
+2. **前端專案**:Root Directory 填 `dashboard/frontend`(自動偵測 Next.js),
+   環境變數 `NEXT_PUBLIC_API_URL` 填 API 網域
+
+雲端是**唯讀資料快照**:每次 `git push` 自動重新部署最新的預測與報告;
+「更新驗證」按鈕在雲端不可用(回 501),請在本機驗證後 push。報告不想公開
+就在 Vercel 開 Deployment Protection。詳細步驟見
+[`dashboard/README.md`](dashboard/README.md)。
+
 ### 建議的每週例行流程
 
 ```bash
 python scripts/verify_predictions.py --fetch   # 更新 K 線 + 判定到期預測
+git add -A && git commit -m "weekly verify" && git push   # 有部署 Vercel 時順手更新雲端
 # 然後開 dashboard 查看最新勝率與待驗證清單
 ```
 

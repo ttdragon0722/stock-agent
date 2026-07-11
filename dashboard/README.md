@@ -54,6 +54,32 @@ cd frontend && npm run dev        # http://localhost:3000
 - 「🔄 執行驗證」按鈕 → 呼叫 `/api/verify` → 自動刷新全部資料
 - 決策報告瀏覽器(markdown 渲染,含 GFM 表格)
 
+## 部署到 Vercel(手機隨時查看)
+
+repo 已含部署設定:根目錄 `api/index.py`(serverless 進入點,載入本目錄的
+FastAPI app)+ `vercel.json`(rewrite 全部路由)+ `requirements.txt`。
+資料層(predictions/reports/market.db)已 commit 在 repo,部署時整包進
+function——**雲端是唯讀快照**,每次 `git push` 自動重新部署最新資料。
+
+建立**兩個 Vercel 專案**,都連到同一個 GitHub repo:
+
+| 設定 | ① API 專案 | ② 前端專案 |
+|------|-----------|-----------|
+| Root Directory | 留空(repo 根目錄) | `dashboard/frontend` |
+| Framework Preset | Other(自動偵測 `api/index.py`) | Next.js(自動偵測) |
+| 環境變數 | `DASHBOARD_CORS_ORIGINS` = 前端網域(如 `https://<前端專案>.vercel.app`) | `NEXT_PUBLIC_API_URL` = API 網域(如 `https://<API 專案>.vercel.app`) |
+
+注意事項:
+
+- **「更新驗證」按鈕在雲端回 501**(唯讀快照無法寫 market.db/outcomes.jsonl)。
+  流程改為:本機跑 `verify_predictions.py --fetch` → commit → push →
+  Vercel 自動重新部署,手機上就看得到最新判定。
+- 兩個專案先後建立時網域才會確定:先各自部署一次拿到網域,再回頭把
+  環境變數填上並 Redeploy。
+- 預設部署是**公開網址**;報告若不想公開,在 Vercel 專案
+  Settings → Deployment Protection 開啟 Vercel Authentication。
+- 本機開發完全不受影響:`start.ps1` / uvicorn + npm run dev 照舊。
+
 ## 擴充指引
 
 - **加後端端點**:在 `backend/main.py` 新增 route,邏輯盡量放回 skill 的

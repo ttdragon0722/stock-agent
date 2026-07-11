@@ -1,0 +1,2 @@
+# Vercel serverless API (api/index.py) — the skill itself stays stdlib-only.
+fastapi>=0.115

@@ -14,6 +14,7 @@
 | `invest-advisor/tests/` | pytest 測試套件 |
 | `dashboard/backend/` | FastAPI(:8787),直接 import skill 的 `scripts/` 模組 |
 | `dashboard/frontend/` | Next.js 16 + TypeScript + Tailwind v4(:3000) |
+| `api/` + `vercel.json` | Vercel 部署進入點(serverless 包 FastAPI;雲端為唯讀快照,`/api/verify` 回 501) |
 | `backup/` | 歷史報告備份(手動快照,勿當作報告目錄) |
 
 ## 常用指令

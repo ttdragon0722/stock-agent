@@ -11,6 +11,7 @@ Run:
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -30,10 +31,20 @@ import verify_predictions as vp  # noqa: E402
 
 VERIFY_TIMEOUT_SECONDS = 300
 
+
+def cors_origins(env: str | None = None) -> list[str]:
+    """Local dev origins plus comma-separated DASHBOARD_CORS_ORIGINS
+    (e.g. the Vercel frontend domain)."""
+    raw = env if env is not None else os.environ.get(
+        "DASHBOARD_CORS_ORIGINS", "")
+    extra = [o.strip().rstrip("/") for o in raw.split(",") if o.strip()]
+    return ["http://localhost:3000", "http://127.0.0.1:3000", *extra]
+
+
 app = FastAPI(title="invest-advisor dashboard API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=cors_origins(),
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -114,6 +125,14 @@ def calibration() -> dict:
 @app.post("/api/verify")
 def run_verification(fetch: bool = True) -> dict:
     """Run outcome verification (optionally auto-fetching OHLCV first)."""
+    # Serverless deploys (Vercel) ship a read-only data snapshot; verification
+    # writes market.db / outcomes.jsonl, so it must run on a real machine.
+    if os.environ.get("VERCEL"):
+        raise HTTPException(
+            status_code=501,
+            detail="雲端部署是唯讀資料快照,不支援線上驗證。"
+                   "請在本機執行 verify_predictions.py --fetch,"
+                   "commit 後 push 即會自動重新部署最新資料。")
     cmd = [sys.executable, str(SKILL_SCRIPTS / "verify_predictions.py")]
     if fetch:
         cmd.append("--fetch")
