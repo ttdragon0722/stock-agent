@@ -38,6 +38,9 @@ python recall_history.py --symbol 2330.TW
 
 - 輸出含:過去每筆預測(方向/分數/論點)+ 判定結果(WIN/LOSS/PENDING)
   + 同標的歷史報告檔名(到 `data/reports/` 讀取)
+  + **全系統信心校準回饋 `calibration`**(各信心分桶的實際勝率;
+    本筆信心落在 `overconfident_buckets` 內 → Step 4 依 rubric §IV
+    校準回饋條款信心 −10)
 - **有歷史紀錄時,報告必須包含「與上次觀點的差異」段落**:
   沿用、修正或翻轉,都要指明觸發變化的新事實;
   **觀點翻轉(long↔short)而說不出新事實 → 信心指數 −10**
@@ -67,7 +70,10 @@ python fetch_ohlcv.py --symbol TSLA,SPY --asset-type stock --timeframe 1d   # �
 python fetch_ohlcv.py --symbol TSLA --asset-type stock --timeframe 1w
 python compute_ta.py --symbol TSLA --timeframe 1d
 python compute_ta.py --symbol TSLA --timeframe 1w
+python compute_ta.py --symbol SPY --timeframe 1d    # benchmark TA:宏觀分數的大盤趨勢錨(rubric §II)
 ```
+
+台股標的宏觀錨另跑 `^TWII` 或 `0050.TW`;加密貨幣用 BTCUSDT。
 
 台股標的(.TW/.TWO)**必須**另跑(官方 A 級證據,見 rubric §0):
 
@@ -115,6 +121,11 @@ python fetch_mops.py --symbol 2330.TW     # MOPS 重大訊息+月營收
 核心規則(細節見 rubric):
 
 - 推薦指數 = 加權總分;信心指數獨立計算,反映資訊完整度 × 訊號一致性
+- **技術面以主時框 compute_ta 的 `suggested_score` 區間為錨**,
+  偏離要寫理由且 ≤ 10 分;**宏觀面的大盤趨勢必須引 benchmark TA**
+  (皆為 rubric 1.2.0 機械錨定條款)
+- **信心指數套用 Step 1.5 的校準回饋**:本筆信心所屬分桶被標記
+  overconfident → 信心 −10(rubric §IV)
 - **訊號矛盾或資料稀缺時,信心指數必須誠實調降;禁止預設高信心**
 - 買點問題:**R:R < 1.5 必須主動建議放棄或等待**,不得硬給進場點
 

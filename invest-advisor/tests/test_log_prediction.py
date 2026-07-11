@@ -42,6 +42,13 @@ class TestValidate:
         assert any("recommendation_score" in e
                    for e in lp.validate_prediction(rec))
 
+    def test_screened_out_counterfactual_accepted(self):
+        rec = valid_q1()
+        del rec["entry_zone"], rec["stop_loss"], rec["take_profit"]
+        rec["question_type"] = "Q3_screened_out"
+        rec["thesis_summary"] = "rejected at light-scoring stage: weak volume"
+        assert lp.validate_prediction(rec) == []
+
     def test_q1_requires_trade_plan(self):
         rec = valid_q1()
         del rec["entry_zone"], rec["stop_loss"], rec["take_profit"]

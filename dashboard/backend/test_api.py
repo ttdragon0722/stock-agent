@@ -22,7 +22,7 @@ class TestReadEndpoints:
         if body["data"]:
             row = body["data"][0]
             assert {"id", "asset", "status", "days_left",
-                    "verifiable_now"} <= set(row.keys())
+                    "verifiable_now", "falsification_condition"} <= set(row.keys())
 
     def test_stats(self):
         r = client.get("/api/stats")

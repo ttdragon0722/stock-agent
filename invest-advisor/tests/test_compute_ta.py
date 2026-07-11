@@ -123,3 +123,68 @@ class TestBuildSnapshot:
         assert snap["rsi14"] == 100.0
         assert snap["stale_bars"] == 0
         assert snap["last_close"] == bars[-1]["close"]
+        suggestion = snap["suggested_score"]
+        assert 5 <= suggestion["base"] <= 95
+        assert suggestion["range"][0] <= suggestion["base"] <= suggestion["range"][1]
+
+
+def make_snap(**overrides) -> dict:
+    """Minimal snapshot for suggest_tech_score (pure-function input)."""
+    base = {
+        "last_close": 100.0, "sma20": 98.0, "sma50": 95.0, "sma200": 90.0,
+        "rsi14": 60.0,
+        "macd": {"line": 1.0, "signal": 0.5, "hist": 0.5, "cross": "none"},
+        "vol_ratio_20": 1.0, "dist_52w_high_pct": -10.0, "trend": "uptrend",
+    }
+    return {**base, **overrides}
+
+
+class TestSuggestScore:
+    def test_bullish_setup_scores_high(self):
+        snap = make_snap(macd={"line": 1, "signal": 0.5, "hist": 0.5,
+                               "cross": "bullish"},
+                         vol_ratio_20=1.6, dist_52w_high_pct=-2.0)
+        result = ta.suggest_tech_score(snap)
+        # 15 + 8 + 8 + 8 + 4 + 4 = +47 -> clamped at 95
+        assert result["base"] == 95
+        assert result["range"] == [90, 100]
+
+    def test_bearish_setup_scores_low(self):
+        snap = make_snap(trend="downtrend", last_close=80.0,
+                         sma20=85.0, sma50=90.0, sma200=95.0, rsi14=25.0,
+                         macd={"line": -1, "signal": -0.5, "hist": -0.5,
+                               "cross": "bearish"},
+                         vol_ratio_20=1.8, dist_52w_high_pct=-50.0)
+        result = ta.suggest_tech_score(snap)
+        # -15 - 8 - 10 - 8 - 4 - 6 = -51 -> clamped at 5
+        assert result["base"] == 5
+        assert result["range"] == [1, 10]
+
+    def test_mixed_signals_stay_mid(self):
+        snap = make_snap(trend="range", sma20=101.0, sma50=99.0, sma200=100.0,
+                         rsi14=45.0,
+                         macd={"line": 0.1, "signal": 0.1, "hist": 0.0,
+                               "cross": "none"})
+        result = ta.suggest_tech_score(snap)
+        assert 40 <= result["base"] <= 60
+
+    def test_deterministic(self):
+        snap = make_snap()
+        assert ta.suggest_tech_score(snap) == ta.suggest_tech_score(snap)
+
+    def test_components_sum_to_base(self):
+        result = ta.suggest_tech_score(make_snap())
+        assert result["base"] == 50 + sum(result["components"].values())
+
+    def test_missing_optional_fields_tolerated(self):
+        snap = make_snap(rsi14=None, macd=None, vol_ratio_20=None,
+                         dist_52w_high_pct=None, sma200=None)
+        result = ta.suggest_tech_score(snap)
+        assert result["components"]["rsi"] == 0
+        assert result["components"]["macd"] == 0
+        # trend + ma_alignment still contribute
+        assert result["base"] == 50 + 15 + 8
+
+    def test_high_volume_in_downtrend_penalized(self):
+        snap = make_snap(trend="downtrend", vol_ratio_20=2.0)
+        assert ta.suggest_tech_score(snap)["components"]["volume"] == -4

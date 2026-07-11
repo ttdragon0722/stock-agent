@@ -36,6 +36,12 @@
 - 長期推薦改用該資產類別的標準權重(非 Q3 欄)
 - **每一檔各記一筆預測日誌**(question_type = Q3_screener),
   短期 horizon 14 天、長期 90 天
+- **淘汰者也要留反事實紀錄**:輕量評分後被淘汰的每一檔各記一筆
+  `question_type = Q3_screened_out`(direction 取輕量評分的傾向、
+  分數用輕量分數、thesis_summary 寫淘汰理由、horizon 與入選者相同、
+  無交易計畫)。這些紀錄**不計入勝率與方向準確率**,只用於
+  calibration_report 的「篩選漏斗對照」——沒有它,永遠無法知道
+  漏斗是在選股還是在追高
 
 ## Q4 點位分析(「X 的點位怎麼看」)
 

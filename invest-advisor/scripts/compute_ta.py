@@ -141,6 +141,83 @@ def classify_trend(close: float, s20: float | None, s50: float | None,
     return "range"
 
 
+# ------------------------------------------------------------ score suggestion
+
+def suggest_tech_score(snap: dict) -> dict:
+    """Deterministic single-timeframe technical score suggestion (1-100).
+
+    The LLM's final technical score must anchor to the MAIN timeframe's
+    suggested range (see references/scoring-rubric.md §II); deviations need a
+    stated reason and are capped at 10 points. Multi-timeframe conflict rules
+    (ta-checklist.md §3) take precedence. Pure function over a snapshot dict.
+    """
+    comp: dict[str, int] = {}
+    trend = snap.get("trend")
+    comp["trend"] = {"uptrend": 15, "downtrend": -15}.get(trend, 0)
+
+    close = snap["last_close"]
+    s20, s50, s200 = snap.get("sma20"), snap.get("sma50"), snap.get("sma200")
+    ma = 0
+    if s20 and s50:
+        stack = [close, s20, s50] + ([s200] if s200 else [])
+        if all(a > b for a, b in zip(stack, stack[1:])):
+            ma = 8
+        elif all(a < b for a, b in zip(stack, stack[1:])):
+            ma = -8
+    comp["ma_alignment"] = ma
+
+    rsi_v = snap.get("rsi14")
+    if rsi_v is None:
+        r = 0
+    elif rsi_v >= 80:
+        r = -5   # 過熱,追高風險
+    elif rsi_v >= 70:
+        r = 3
+    elif rsi_v >= 50:
+        r = 8    # 健康多頭動能
+    elif rsi_v >= 40:
+        r = 0
+    elif rsi_v >= 30:
+        r = -8
+    else:
+        r = -10
+    comp["rsi"] = r
+
+    m = snap.get("macd")
+    macd_score = 0
+    if m:
+        macd_score = 5 if m["hist"] > 0 else (-5 if m["hist"] < 0 else 0)
+        macd_score += {"bullish": 3, "bearish": -3}.get(m["cross"], 0)
+    comp["macd"] = macd_score
+
+    vr = snap.get("vol_ratio_20")
+    v = 0
+    if vr is not None:
+        if vr >= 1.5:  # 放量只有搭配趨勢方向才有意義
+            v = 4 if trend == "uptrend" else (-4 if trend == "downtrend" else 0)
+        elif vr < 0.7:
+            v = -2     # 量縮,趨勢可信度打折
+    comp["volume"] = v
+
+    d52 = snap.get("dist_52w_high_pct")
+    p = 0
+    if d52 is not None:
+        if d52 >= -5:
+            p = 4      # 接近 52w 高,動能強
+        elif d52 <= -40:
+            p = -6     # 深度破位
+    comp["position_52w"] = p
+
+    base = max(5, min(95, 50 + sum(comp.values())))
+    return {
+        "base": base,
+        "range": [max(1, base - 5), min(100, base + 5)],
+        "components": comp,
+        "note": ("single-timeframe deterministic suggestion; "
+                 "multi-timeframe synthesis per ta-checklist.md §3"),
+    }
+
+
 # ------------------------------------------------------------------ assembly
 
 def build_snapshot(symbol: str, timeframe: str, bars: list[dict],
@@ -167,7 +244,7 @@ def build_snapshot(symbol: str, timeframe: str, bars: list[dict],
     bar_seconds = {"1d": 86400, "4h": 14400, "1w": 604800}.get(timeframe, 86400)
     stale_bars = max(0.0, (now_ts - last["ts"] - bar_seconds) / bar_seconds)
 
-    return {
+    snap = {
         "symbol": symbol.upper(),
         "timeframe": timeframe,
         "as_of": common.iso_utc(last["ts"]),
@@ -190,6 +267,8 @@ def build_snapshot(symbol: str, timeframe: str, bars: list[dict],
         "resistances": resistances,
         "trend": classify_trend(last["close"], s20, s50, s200),
     }
+    snap["suggested_score"] = suggest_tech_score(snap)
+    return snap
 
 
 def main() -> int:

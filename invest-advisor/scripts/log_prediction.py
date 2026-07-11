@@ -16,8 +16,11 @@ import sys
 import common
 
 ASSET_TYPES = {"stock", "crypto"}
+# Q3_screened_out: counterfactual record for names REJECTED by the Q3 funnel —
+# verified like any prediction but excluded from headline accuracy stats,
+# so the funnel's picked-vs-rejected edge can be measured.
 QUESTION_TYPES = {"Q1_short_entry", "Q2_long_hold", "Q3_screener",
-                  "Q4_levels", "Q5_allocation"}
+                  "Q3_screened_out", "Q4_levels", "Q5_allocation"}
 DIRECTIONS = {"long", "short", "neutral"}
 MIN_RR = 1.5
 

@@ -1,4 +1,6 @@
 """Unit tests for outcome-verification first-touch logic."""
+import pytest
+
 import verify_predictions as vp
 
 DAY = 86400
@@ -80,6 +82,14 @@ class TestLongTradePlan:
         out = vp.evaluate_prediction(pred_with_ts(), bars, [], T0 + 20 * DAY)
         assert out["fill_price"] == 238  # filled at open, not entry_hi
 
+    def test_gap_through_sl_exits_at_open(self):
+        bars = [bar(1, 245, 246, 240, 241),   # fills at 245
+                bar(2, 228, 233, 226, 230)]   # opens BELOW SL 232
+        out = vp.evaluate_prediction(pred_with_ts(), bars, [], T0 + 20 * DAY)
+        assert out["status"] == "LOSS"
+        assert out["exit_price"] == 228        # open, not the SL price
+        assert out["r_multiple"] < -1.0        # loss never understated
+
 
 class TestShortTradePlan:
     def test_short_win(self):
@@ -130,6 +140,56 @@ class TestDirectionalOnly:
         out = vp.evaluate_prediction(pred, bars, [], T0 + 2 * DAY)
         assert out["status"] == "PENDING"
 
+    def test_tiny_drift_is_noise_not_skill(self):
+        pred = pred_with_ts(question_type="Q2_long_hold")
+        for k in ("entry_zone", "stop_loss", "take_profit"):
+            del pred[k]
+        # +0.4% drift at 14d is inside the ~1% noise band
+        bars = [bar(d, 245, 247, 244, 246) for d in range(1, 15)]
+        out = vp.evaluate_prediction(pred, bars, [], T0 + 20 * DAY)
+        assert out["status"] == "RESOLVED_DIRECTIONAL"
+        assert out["direction_correct"] is None
+        assert out["within_noise_band"] is True
+
+    def test_wrong_direction_beyond_noise_band(self):
+        pred = pred_with_ts(question_type="Q2_long_hold")
+        for k in ("entry_zone", "stop_loss", "take_profit"):
+            del pred[k]
+        bars = [bar(d, 245, 247, 234, 236) for d in range(1, 15)]  # -3.7%
+        out = vp.evaluate_prediction(pred, bars, [], T0 + 20 * DAY)
+        assert out["direction_correct"] is False
+
+
+class TestHorizonScaledBands:
+    def test_noise_band_grows_with_horizon_capped(self):
+        assert vp.noise_band_pct(14) == 1.0
+        assert vp.noise_band_pct(90) == pytest.approx(2.54, abs=0.01)
+        assert vp.noise_band_pct(400) == 3.0  # capped
+
+    def test_neutral_band_grows_with_horizon_capped(self):
+        assert vp.neutral_band_pct(30) == 5.0
+        assert vp.neutral_band_pct(180) == pytest.approx(12.25, abs=0.01)
+        assert vp.neutral_band_pct(2000) == 15.0  # capped
+
+    def test_neutral_180d_allows_wider_drift(self):
+        pred = pred_with_ts(direction="neutral", horizon_days=180,
+                            question_type="Q2_long_hold")
+        for k in ("entry_zone", "stop_loss", "take_profit"):
+            del pred[k]
+        # +8% over 180d: outside the old fixed 5% band, inside the scaled one
+        bars = [bar(d, 245, 250, 244, 264.6) for d in range(1, 20)]
+        out = vp.evaluate_prediction(pred, bars, [], T0 + 200 * DAY)
+        assert out["direction_correct"] is True
+
+    def test_neutral_14d_band_tighter_than_before(self):
+        pred = pred_with_ts(direction="neutral", question_type="Q2_long_hold")
+        for k in ("entry_zone", "stop_loss", "take_profit"):
+            del pred[k]
+        # +4.5% over 14d: inside the old fixed 5%, outside the scaled ~3.4%
+        bars = [bar(d, 245, 258, 244, 256) for d in range(1, 15)]
+        out = vp.evaluate_prediction(pred, bars, [], T0 + 20 * DAY)
+        assert out["direction_correct"] is False
+
 
 class TestBenchmarkAndNoData:
     def test_no_data(self):
@@ -164,3 +224,49 @@ class TestSummarize:
         assert stats["expectancy_r"] == round((2.0 - 1.0 + 1.5 + 0.5) / 4, 3)
         assert stats["by_status"]["NOT_FILLED"] == 1
         assert stats["sample_warning"] is not None  # n < 50
+
+    def test_allocation_excluded_from_direction_accuracy(self):
+        outcomes = [
+            {"status": "RESOLVED_DIRECTIONAL", "question_type": "Q2_long_hold",
+             "r_multiple": None, "direction_correct": True,
+             "excess_return_pct": 2.0},
+            {"status": "RESOLVED_NEUTRAL", "question_type": "Q5_allocation",
+             "r_multiple": None, "direction_correct": False,
+             "excess_return_pct": -9.0},
+        ]
+        stats = vp.summarize(outcomes)
+        assert stats["direction_accuracy"] == 1.0     # Q5 not counted
+        assert stats["avg_excess_return_pct"] == 2.0  # Q5 excess not counted
+        assert stats["allocation_excluded_n"] == 1
+
+    def test_screened_out_excluded_but_funnel_reported(self):
+        outcomes = [
+            {"status": "RESOLVED_DIRECTIONAL", "question_type": "Q3_screener",
+             "r_multiple": None, "direction_correct": True,
+             "excess_return_pct": 3.0, "return_pct": 6.0},
+            {"status": "RESOLVED_DIRECTIONAL", "question_type": "Q3_screener",
+             "r_multiple": None, "direction_correct": True,
+             "excess_return_pct": 1.0, "return_pct": 4.0},
+            {"status": "RESOLVED_DIRECTIONAL",
+             "question_type": "Q3_screened_out",
+             "r_multiple": None, "direction_correct": False,
+             "excess_return_pct": -2.0, "return_pct": 1.0},
+        ]
+        stats = vp.summarize(outcomes)
+        assert stats["direction_accuracy"] == 1.0  # counterfactual excluded
+        funnel = stats["screener_funnel"]
+        assert funnel["picked_n"] == 2
+        assert funnel["rejected_n"] == 1
+        assert funnel["picked_avg_return_pct"] == 5.0
+        assert funnel["rejected_avg_return_pct"] == 1.0
+        assert funnel["edge_pct"] == 4.0
+
+    def test_noise_band_exclusions_counted(self):
+        outcomes = [
+            {"status": "RESOLVED_DIRECTIONAL", "question_type": "Q2_long_hold",
+             "r_multiple": None, "direction_correct": None,
+             "within_noise_band": True, "excess_return_pct": None},
+        ]
+        stats = vp.summarize(outcomes)
+        assert stats["direction_accuracy"] is None
+        assert stats["noise_band_excluded"] == 1

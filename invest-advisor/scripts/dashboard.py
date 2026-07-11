@@ -55,6 +55,7 @@ def build_rows(predictions: list[dict], outcomes: list[dict],
             "stop_loss": pred.get("stop_loss"),
             "take_profit": pred.get("take_profit"),
             "risk_reward": pred.get("risk_reward"),
+            "falsification_condition": pred.get("falsification_condition"),
             "logged": pred["timestamp"][:10],
             "horizon_end": common.iso_utc(horizon_end)[:10],
             "days_left": days_left,
@@ -107,6 +108,8 @@ def render_html(rows: list[dict], report_files: list[str],
             f'<td>{_fmt(r["stop_loss"])}</td>'
             f'<td>{_fmt(r["take_profit"])}</td>'
             f'<td>{_fmt(r["risk_reward"])}</td>'
+            f'<td class="cond" title="{html.escape(_fmt(r["falsification_condition"]))}">'
+            f'{html.escape(_fmt(r["falsification_condition"]))}</td>'
             f'<td>{r["logged"]} → {r["horizon_end"]}</td>'
             f'<td><span class="badge" style="background:{color}">'
             f'{html.escape(r["status"])}</span></td>'
@@ -129,6 +132,7 @@ def render_html(rows: list[dict], report_files: list[str],
  th,td{{border:1px solid #d0d7de;padding:.35rem .5rem;text-align:left;
        white-space:nowrap}}
  .badge{{color:#fff;border-radius:.6rem;padding:.1rem .5rem;font-size:.75rem}}
+ .cond{{max-width:14rem;overflow:hidden;text-overflow:ellipsis}}
  .banner{{padding:.6rem 1rem;border-radius:.5rem;margin:1rem 0}}
  .warn{{background:#fff8c5;border:1px solid #d4a72c;color:#4d2d00}}
  .ok{{background:#dafbe1;border:1px solid #1a7f37;color:#0f5323}}
@@ -143,7 +147,7 @@ def render_html(rows: list[dict], report_files: list[str],
 <div class="wrap"><table>
 <tr><th>ID</th><th>標的</th><th>題型</th><th>方向</th><th>推薦/信心</th>
 <th>分析價</th><th>進場區</th><th>SL</th><th>TP</th><th>R:R</th>
-<th>期間</th><th>狀態</th><th>到期</th><th>報酬%</th></tr>
+<th>失效條件</th><th>期間</th><th>狀態</th><th>到期</th><th>報酬%</th></tr>
 {"".join(body_rows)}
 </table></div>
 <h2>決策報告</h2>

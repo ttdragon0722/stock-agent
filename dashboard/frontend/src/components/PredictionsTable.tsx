@@ -36,7 +36,7 @@ export default function PredictionsTable({ rows }: { rows: PredictionRow[] }) {
           <tr>
             {[
               "標的", "題型", "方向", "推薦/信心", "分析價", "進場區",
-              "SL", "TP", "R:R", "期間", "狀態", "到期", "報酬%",
+              "SL", "TP", "R:R", "失效條件", "期間", "狀態", "到期", "報酬%",
             ].map((h) => (
               <th key={h} className="px-3 py-2 font-medium">{h}</th>
             ))}
@@ -57,6 +57,14 @@ export default function PredictionsTable({ rows }: { rows: PredictionRow[] }) {
               <td className="px-3 py-2">{fmt(r.stop_loss)}</td>
               <td className="px-3 py-2">{fmt(r.take_profit)}</td>
               <td className="px-3 py-2">{fmt(r.risk_reward)}</td>
+              <td className="px-3 py-2">
+                <span
+                  className="block max-w-56 truncate text-xs"
+                  title={fmt(r.falsification_condition)}
+                >
+                  {fmt(r.falsification_condition)}
+                </span>
+              </td>
               <td className="px-3 py-2 text-xs">
                 {r.logged} → {r.horizon_end}
               </td>

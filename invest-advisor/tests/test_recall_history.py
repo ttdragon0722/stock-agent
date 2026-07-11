@@ -106,3 +106,55 @@ class TestBuildHistory:
         assert hist["prediction_count"] == 0
         assert hist["predictions"] == []
         assert hist["last_direction"] is None
+
+
+class TestCalibrationFeedback:
+    @staticmethod
+    def make_pair(pid: str, confidence: int, status: str,
+                  question_type: str = "Q1_short_entry"):
+        pred = make_pred("X", pid, "2026-07-01T00:00:00Z")
+        pred["confidence_score"] = confidence
+        pred["question_type"] = question_type
+        return pred, make_outcome(pid, status)
+
+    def test_small_sample_disables_feedback(self):
+        preds, outs = [], []
+        for i in range(5):
+            p, o = self.make_pair(str(i), 75, "WIN")
+            preds.append(p)
+            outs.append(o)
+        fb = rh.calibration_feedback(preds, outs)
+        assert fb["resolved_n"] == 5
+        assert "note" in fb
+        assert "overconfident_buckets" not in fb
+
+    def test_overconfident_bucket_flagged(self):
+        preds, outs = [], []
+        # confidence 75 x20, actual win rate 40% -> gap 35pp >= 15pp
+        for i in range(20):
+            p, o = self.make_pair(str(i), 75, "WIN" if i < 8 else "LOSS")
+            preds.append(p)
+            outs.append(o)
+        fb = rh.calibration_feedback(preds, outs)
+        assert fb["resolved_n"] == 20
+        assert fb["overconfident_buckets"] == ["[70-79]"]
+
+    def test_well_calibrated_bucket_not_flagged(self):
+        preds, outs = [], []
+        # confidence 55 x20, actual win rate 50% -> gap 5pp < 15pp
+        for i in range(20):
+            p, o = self.make_pair(str(i), 55, "WIN" if i % 2 else "LOSS")
+            preds.append(p)
+            outs.append(o)
+        fb = rh.calibration_feedback(preds, outs)
+        assert fb["overconfident_buckets"] == []
+
+    def test_screened_out_excluded(self):
+        preds, outs = [], []
+        for i in range(20):
+            p, o = self.make_pair(str(i), 75, "LOSS",
+                                  question_type="Q3_screened_out")
+            preds.append(p)
+            outs.append(o)
+        fb = rh.calibration_feedback(preds, outs)
+        assert fb["resolved_n"] == 0

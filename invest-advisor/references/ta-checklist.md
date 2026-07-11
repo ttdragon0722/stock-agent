@@ -29,6 +29,7 @@ python compute_ta.py --symbol <SYM> --timeframe 1w
 | `supports` / `resistances` | 擺動樞紐位(距現價最近的 3 個) | 進場/SL/TP 錨點 |
 | `high_52w` / `dist_52w_high_pct` | 相對位置 | 接近 52w 高 = 動能強但追高風險 |
 | `vol_ratio_20` | 量能 | >1.5 放量;<0.7 量縮(突破無量 = 存疑) |
+| `suggested_score` | 該時框的確定性建議技術分(base ± 5 區間 + 各成分) | 主時框的 range 是技術面分數的錨,見 §3.5 |
 
 ## 3. 多時框合成
 
@@ -36,6 +37,18 @@ python compute_ta.py --symbol <SYM> --timeframe 1w
 - 時框衝突(1w 空、1d 多)→ 技術面分數壓在 40–59,信心指數 −15
   (scoring-rubric §IV 訊號矛盾條款)
 - 只有主時框一致 + 動能確認才允許技術面 ≥ 80
+
+## 3.5 建議分數的使用方式(suggested_score)
+
+- `suggested_score` 是**單時框**的確定性合成:trend / 均線排列 / RSI /
+  MACD / 量能 / 52 週位置六個成分查表相加(基準 50,夾在 5–95),
+  同樣的輸入永遠得到同樣的分數
+- **技術面最終分數以主時框(通常 1d)的 `range` 為錨**:
+  落在區間內免說明;偏離要寫明理由且不得超過 10 分
+  (規則見 scoring-rubric §II 技術面)
+- 多時框衝突時,§3 的 40–59 壓制條款優先於建議分數
+- `components` 逐項列出加減分來源——報告引用技術面證據時
+  可直接對照,不必重新詮釋指標
 
 ## 4. 交易計畫錨定規則
 

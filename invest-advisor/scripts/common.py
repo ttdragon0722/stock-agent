@@ -25,7 +25,7 @@ NEWS_DB = DATA_DIR / "news_cache.db"
 PREDICTIONS_FILE = DATA_DIR / "predictions.jsonl"
 OUTCOMES_FILE = DATA_DIR / "outcomes.jsonl"
 
-RUBRIC_VERSION = "1.1.0"
+RUBRIC_VERSION = "1.2.0"
 
 # Benchmarks used for excess-return comparison (see references/scoring-rubric.md)
 BENCHMARK_BY_ASSET_TYPE = {"stock": "SPY", "crypto": "BTCUSDT"}

@@ -250,6 +250,13 @@ function MarketTable({ group }: { group: MarketGroup }) {
                         <dd className="font-mono text-emerald-100">
                           {formatRange(row.take_profit)}
                         </dd>
+                        <dt className="text-slate-500">失效</dt>
+                        <dd
+                          className="max-w-56 truncate text-slate-300"
+                          title={row.falsification_condition ?? undefined}
+                        >
+                          {row.falsification_condition ?? "--"}
+                        </dd>
                       </dl>
                     </td>
                     <td className="px-4 py-4 font-mono text-slate-100">
@@ -323,6 +330,12 @@ function MarketTable({ group }: { group: MarketGroup }) {
                     <dt className="text-slate-500">驗證</dt>
                     <dd className="mt-1">
                       <DueLabel row={row} />
+                    </dd>
+                  </div>
+                  <div className="col-span-2">
+                    <dt className="text-slate-500">失效條件</dt>
+                    <dd className="mt-1 text-slate-300">
+                      {row.falsification_condition ?? "--"}
                     </dd>
                   </div>
                 </dl>

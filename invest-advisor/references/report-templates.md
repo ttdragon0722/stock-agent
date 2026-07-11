@@ -174,9 +174,13 @@ R:R < 1.5 → 表格照給但結論改「建議等待」,並寫明等待條件�
 `python log_prediction.py --file <file>`。
 
 必填:`asset, asset_type(stock|crypto), question_type(Q1_short_entry|
-Q2_long_hold|Q3_screener|Q4_levels|Q5_allocation), direction(long|short|
-neutral), recommendation_score(1-100), confidence_score(1-100),
-price_at_analysis, horizon_days, falsification_condition, thesis_summary`
+Q2_long_hold|Q3_screener|Q3_screened_out|Q4_levels|Q5_allocation),
+direction(long|short|neutral), recommendation_score(1-100),
+confidence_score(1-100), price_at_analysis, horizon_days,
+falsification_condition, thesis_summary`
+
+`Q3_screened_out` 是篩選淘汰者的反事實紀錄(見 question-types.md Q3):
+照常驗證但不計入勝率/方向準確率統計,僅供漏斗對照。
 
 Q1 的 long/short 必填:`entry_zone([lo,hi]), stop_loss, take_profit([tp1,...])`
 (long:SL < entry_lo 且 TP1 > entry_hi;short 相反;腳本會驗證並自動算 R:R)

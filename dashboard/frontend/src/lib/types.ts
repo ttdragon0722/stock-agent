@@ -19,6 +19,7 @@ export interface PredictionRow {
   stop_loss: number | null;
   take_profit: number[] | null;
   risk_reward: number | null;
+  falsification_condition: string | null;
   logged: string;
   horizon_end: string;
   days_left: number;

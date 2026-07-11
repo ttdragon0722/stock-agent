@@ -113,7 +113,32 @@ def md_table(rows: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def screener_funnel_section(joined: list[dict]) -> list[str]:
+    """Picked vs rejected (Q3_screened_out) — does the funnel add value?"""
+    from verify_predictions import _screener_funnel
+    funnel = _screener_funnel(joined)
+    if not funnel:
+        return []
+    edge = funnel.get("edge_pct")
+    return [
+        "## 3.5 篩選漏斗對照(Q3 入選 vs 淘汰)",
+        "> 入選組平均報酬應高於淘汰組;否則漏斗只是動能追高,沒有選股能力。",
+        "",
+        f"- 入選:n = {funnel['picked_n']},"
+        f"平均報酬 {funnel['picked_avg_return_pct']}%",
+        f"- 淘汰:n = {funnel['rejected_n']},"
+        f"平均報酬 {funnel['rejected_avg_return_pct']}%",
+        f"- 漏斗優勢:{edge if edge is not None else '—'} pp",
+        "",
+    ]
+
+
 def build_report(joined: list[dict], now_iso: str) -> str:
+    # counterfactual records only feed the funnel section, never the stats
+    screened_out = [r for r in joined
+                    if r.get("question_type") == "Q3_screened_out"]
+    joined = [r for r in joined
+              if r.get("question_type") != "Q3_screened_out"]
     resolved_wl = [r for r in joined if r["status"] in ("WIN", "LOSS")]
     with_returns = [r for r in joined
                     if r["status"] in ("WIN", "LOSS", "FLAT",
@@ -150,6 +175,7 @@ def build_report(joined: list[dict], now_iso: str) -> str:
         "",
         md_table(regime_split(joined)),
         "",
+        *screener_funnel_section(joined + screened_out),
         "## 4. 統計注意事項",
         "- WIN/LOSS 樣本 < 50 時所有結論僅供參考(95% CI 極寬)。",
         "- 多維度同時檢視時,個別維度「碰巧顯著」的機率上升,解讀保守。",

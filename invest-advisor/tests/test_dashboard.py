@@ -51,6 +51,15 @@ class TestBuildRows:
         rows = db.build_rows([old, new], [], T0 + 40 * DAY)
         assert rows[0]["id"] == "new"
 
+    def test_falsification_condition_carried(self):
+        pred = make_pred(falsification_condition="日線收破 232")
+        rows = db.build_rows([pred], [], T0)
+        assert rows[0]["falsification_condition"] == "日線收破 232"
+
+    def test_falsification_condition_missing_is_none(self):
+        rows = db.build_rows([make_pred()], [], T0)
+        assert rows[0]["falsification_condition"] is None
+
 
 class TestRender:
     def test_html_contains_asset_and_banner(self):
@@ -69,6 +78,19 @@ class TestRender:
         rows = db.build_rows([make_pred(asset="<script>")], [], T0)
         page = db.render_html(rows, [], "now")
         assert "<script>" not in page.split("<table>")[1]
+
+    def test_html_shows_falsification_condition(self):
+        pred = make_pred(falsification_condition="日線收破 232")
+        rows = db.build_rows([pred], [], T0)
+        page = db.render_html(rows, [], "now")
+        assert "失效條件" in page
+        assert "日線收破 232" in page
+
+    def test_html_escapes_falsification_condition(self):
+        pred = make_pred(falsification_condition="<img onerror=x>")
+        rows = db.build_rows([pred], [], T0)
+        page = db.render_html(rows, [], "now")
+        assert "<img" not in page.split("<table>")[1]
 
     def test_text_mode(self):
         rows = db.build_rows([make_pred()], [], T0 + 20 * DAY)
