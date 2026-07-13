@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-07-13T06:16:02Z",
+  "updated_at": "2026-07-13T07:23:25Z",
   "important_events": [
     {
       "symbol": "2485.TW",
@@ -28,6 +28,47 @@
       "logged_at": "2026-07-13T06:03:02Z",
       "reports": [
         "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "009816.TW",
+      "date": "2026-07-09",
+      "title": "009816 掛牌 5 個月規模衝 1,609 億,資金回流被動",
+      "description": "「棄主動投被動」資金流的直接受益者;五檔比較中唯一 long(62)",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://www.kgifund.com.tw/Fund/Detail?fundID=J023",
+      "id": "ac77c5fe9986",
+      "logged_at": "2026-07-13T07:23:25Z",
+      "reports": [
+        "2026-07-13_portfolio-allocation_Q5.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-09",
+      "title": "外資連 5 日賣超 0050(20 日 −1.2 億股)",
+      "description": "fetch_chips A 級:7/3–7/9 連 5 日賣超,投信同期買超 +3,405 萬股;時點面主要逆風",
+      "category": "chips",
+      "impact": "bearish",
+      "id": "78f1b6f831d9",
+      "logged_at": "2026-07-13T07:23:25Z",
+      "reports": [
+        "2026-07-13_portfolio-allocation_Q5.md"
+      ]
+    },
+    {
+      "symbol": "00981A.TW",
+      "date": "2026-07-07",
+      "title": "主動式 ETF 資金流反轉:受益人數連三週衰退、外資提款 8 檔",
+      "description": "法人警示重倉股踩踏風險;對 00980A/00981A/00987A 構成結構性利空",
+      "category": "industry",
+      "impact": "bearish",
+      "source_url": "https://www.ftvnews.com.tw/news/detail/2026707W0162",
+      "id": "e872e6f7410b",
+      "logged_at": "2026-07-13T07:23:25Z",
+      "reports": [
+        "2026-07-13_portfolio-allocation_Q5.md"
       ]
     },
     {
@@ -70,6 +111,19 @@
       "logged_at": "2026-07-13T06:03:02Z",
       "reports": [
         "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-17",
+      "label": "0050 配息二階段公告(0.6 元確認)",
+      "date_type": "news_release",
+      "status": "confirmed",
+      "note": "公告若變動,除息相關價位需重算",
+      "id": "a5f9bda457c0",
+      "logged_at": "2026-07-13T07:23:25Z",
+      "reports": [
+        "2026-07-13_portfolio-allocation_Q5.md"
       ]
     },
     {
@@ -122,6 +176,19 @@
       "logged_at": "2026-07-13T06:03:02Z",
       "reports": [
         "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-10-11",
+      "label": "Q5 配置判斷 horizon 終點(90 天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "彙整報告 2026-07-13_portfolio-allocation_Q5 的觀察期限;失效條件 ^TWII 收破 44,454",
+      "id": "6dd9d4891ba1",
+      "logged_at": "2026-07-13T07:23:25Z",
+      "reports": [
+        "2026-07-13_portfolio-allocation_Q5.md"
       ]
     }
   ]
