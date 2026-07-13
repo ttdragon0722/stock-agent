@@ -1,7 +1,49 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-07-13T07:23:25Z",
+  "updated_at": "2026-07-13T08:38:09Z",
   "important_events": [
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-13",
+      "title": "盤中破 300 測 293 支撐後收 299,未站回 300",
+      "description": "K 棒 O301/H302.5/L292.5/C299,長下影守住 293-294.5 雙時框支撐帶但量縮 0.79x;平台 293-302 收斂至 9 元寬(< 1 ATR),表態臨近",
+      "category": "technical",
+      "impact": "neutral",
+      "source_url": "https://tw.stock.yahoo.com/quote/3030.TW",
+      "id": "99cc29ce3862",
+      "logged_at": "2026-07-13T08:38:09Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "009816.TW",
+      "date": "2026-07-13",
+      "title": "反向查證:特選TOP50 含動能因子加碼,非純市值加權",
+      "description": "台積電權重被打散、金融股占比降;動能因子回檔期可能放大波動,結構未經空頭驗證,基本面 75→70",
+      "category": "other",
+      "impact": "bearish",
+      "source_url": "https://www.stockfeel.com.tw/009816-%E5%87%B1%E5%9F%BA%E5%8F%B0%E7%81%A3top50-etf/",
+      "id": "7c2e503c99e4",
+      "logged_at": "2026-07-13T08:23:10Z",
+      "reports": [
+        "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-13",
+      "title": "外資當日續賣超 433 張,20 日累賣 414 萬股",
+      "description": "TWSE A 級籌碼:外資 -432,925 股、三大法人合計 -490,260 股,投信零承接;籌碼與 AI 題材敘事矛盾,以籌碼為準",
+      "category": "chips",
+      "impact": "bearish",
+      "source_url": "https://www.twse.com.tw",
+      "id": "1142079e0396",
+      "logged_at": "2026-07-13T08:38:09Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q4.md"
+      ]
+    },
     {
       "symbol": "2485.TW",
       "date": "2026-07-10",
@@ -58,6 +100,19 @@
       ]
     },
     {
+      "symbol": "009816.TW",
+      "date": "2026-07-09",
+      "title": "外資 20 日淨買超 1,317 萬股(對照 0050 外資連賣)",
+      "description": "fetch_chips A 級(今晨逾時本次補抓);台股 ETF 中資金流最健康,支持「資金回流被動」核心論點",
+      "category": "chips",
+      "impact": "bullish",
+      "id": "022e74976fc6",
+      "logged_at": "2026-07-13T08:23:10Z",
+      "reports": [
+        "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
       "symbol": "00981A.TW",
       "date": "2026-07-07",
       "title": "主動式 ETF 資金流反轉:受益人數連三週衰退、外資提款 8 檔",
@@ -101,6 +156,19 @@
   ],
   "key_dates": [
     {
+      "symbol": "^TWII",
+      "date": "2026-07-14",
+      "label": "美國 6 月 CPI 公布(台股宏觀觀察點)",
+      "date_type": "cpi_release",
+      "status": "estimated",
+      "note": "日期依歷史規律(每月中旬)推估;來源僅稱「未來兩週」",
+      "id": "880bcf15ad16",
+      "logged_at": "2026-07-13T08:23:10Z",
+      "reports": [
+        "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
       "symbol": "2330.TW",
       "date": "2026-07-16",
       "label": "台積電法說會(牽動半導體設備族群情緒)",
@@ -140,6 +208,19 @@
       ]
     },
     {
+      "symbol": "^TWII",
+      "date": "2026-07-29",
+      "label": "Fed 7 月利率決策(FOMC)",
+      "date_type": "fed_meeting",
+      "status": "estimated",
+      "note": "日期依 FOMC 歷史排程(7 月最後週二三)推估;來源僅稱「未來兩週」",
+      "id": "c28083312b8b",
+      "logged_at": "2026-07-13T08:23:10Z",
+      "reports": [
+        "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
       "symbol": "0050.TW",
       "date": "2026-08-10",
       "label": "0050 配息發放日",
@@ -150,6 +231,19 @@
       "logged_at": "2026-07-13T06:16:01Z",
       "reports": [
         "2026-07-13_0050-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "7 月營收公告截止(基本面證偽觀察點)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "YoY <10% 則連兩月低成長,26x 估值失去支撐;>15% 且外資翻買才具備平台低接條件",
+      "id": "4954b194f7c2",
+      "logged_at": "2026-07-13T08:38:09Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q4.md"
       ]
     },
     {
@@ -176,6 +270,32 @@
       "logged_at": "2026-07-13T06:03:02Z",
       "reports": [
         "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-12",
+      "label": "Q4 情境樹觀察期滿(30 天):守 293 / 表態 302",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "日線收破 293 轉空看 281.5;放量收上 302 轉多看 313/324",
+      "id": "11feb095cd0f",
+      "logged_at": "2026-07-13T08:38:09Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "009816.TW",
+      "date": "2026-08-12",
+      "label": "009816 Q1 進場判斷 horizon 終點(30 天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "失效條件:日線收破 14.80 或 ^TWII 收破 44,454",
+      "id": "b44f1b1bea90",
+      "logged_at": "2026-07-13T08:23:10Z",
+      "reports": [
+        "2026-07-13_009816-TW_Q1.md"
       ]
     },
     {
