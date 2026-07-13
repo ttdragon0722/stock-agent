@@ -24,6 +24,7 @@ MARKET_DB = DATA_DIR / "market.db"
 NEWS_DB = DATA_DIR / "news_cache.db"
 PREDICTIONS_FILE = DATA_DIR / "predictions.jsonl"
 OUTCOMES_FILE = DATA_DIR / "outcomes.jsonl"
+EVENTS_FILE = DATA_DIR / "events.json"
 
 RUBRIC_VERSION = "1.2.0"
 
@@ -235,6 +236,29 @@ def write_jsonl(path: Path, records: list[dict]) -> None:
     with open(path, "w", encoding="utf-8") as f:
         for r in records:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+
+def read_json(path: Path, default=None):
+    """Read a whole-file JSON document; missing/corrupt file -> default."""
+    p = Path(path)
+    if not p.exists():
+        return default
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        eprint(f"WARN: {p} unreadable JSON, using default ({e})")
+        return default
+
+
+def write_json_atomic(path: Path, obj) -> None:
+    """Write a JSON document atomically (tmp file + os.replace)."""
+    import os
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    tmp = p.with_name(p.name + ".tmp")
+    tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    os.replace(tmp, p)
 
 
 def eprint(*args) -> None:

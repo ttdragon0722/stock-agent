@@ -55,3 +55,41 @@ export interface VerifyResult {
   summary: Stats;
   log: string;
 }
+
+// events.json 兩區塊文件 — mirror invest-advisor/scripts/log_events.py。
+// 兩種 record 都可能帶腳本保留的擴充欄位,故加 index signature。
+
+export interface ImportantEvent {
+  id: string;
+  symbol: string;
+  date: string; // YYYY-MM-DD
+  title: string;
+  category: string;
+  impact: "bullish" | "bearish" | "neutral";
+  description?: string;
+  source_url?: string;
+  logged_at?: string;
+  reports?: string[];
+  [extra: string]: unknown;
+}
+
+export interface KeyDate {
+  id: string;
+  symbol: string;
+  date: string; // YYYY-MM-DD
+  time?: string; // HH:MM
+  label: string;
+  date_type: string;
+  status: "confirmed" | "estimated";
+  note?: string;
+  logged_at?: string;
+  reports?: string[];
+  [extra: string]: unknown;
+}
+
+export interface EventsDoc {
+  schema_version: string;
+  updated_at: string | null;
+  important_events: ImportantEvent[];
+  key_dates: KeyDate[];
+}

@@ -43,6 +43,25 @@ class TestReadEndpoints:
         assert r.status_code == 200
         assert r.json()["data"]["markdown"]
 
+    def test_events(self):
+        r = client.get("/api/events")
+        assert r.status_code == 200
+        body = r.json()
+        assert body["success"] is True
+        assert {"schema_version", "important_events",
+                "key_dates"} <= set(body["data"].keys())
+        assert isinstance(body["data"]["important_events"], list)
+        assert isinstance(body["data"]["key_dates"], list)
+        assert {"total_events", "total_key_dates"} <= set(body["meta"].keys())
+
+    def test_events_symbol_filter(self):
+        r = client.get("/api/events", params={"symbol": "3030.TW"})
+        assert r.status_code == 200
+        data = r.json()["data"]
+        assert all(e["symbol"] == "3030.TW"
+                   for e in data["important_events"])
+        assert all(d["symbol"] == "3030.TW" for d in data["key_dates"])
+
     def test_calibration(self):
         r = client.get("/api/calibration")
         assert r.status_code == 200

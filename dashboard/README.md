@@ -15,8 +15,9 @@ dashboard/
     └── src/
         ├── lib/types.ts        # API 契約型別(與後端回應一一對應)
         ├── lib/api.ts          # 帶型別的 fetch 層(NEXT_PUBLIC_API_URL 可換環境)
-        ├── components/         # StatsCards / PredictionsTable / ReportsPanel
-        └── app/page.tsx        # 儀表板主頁
+        ├── components/         # StatsCards / PredictionsTable / ReportsPanel / EventsTimeline
+        ├── app/page.tsx        # 儀表板主頁
+        └── app/events/page.tsx # 事件雷達獨立頁(重要事件 + 關鍵日期)
 ```
 
 ## 啟動
@@ -42,6 +43,7 @@ cd frontend && npm run dev        # http://localhost:3000
 | GET | `/api/stats` | 勝率 / 期望值(R)/ 方向準確率 / 超額報酬 |
 | GET | `/api/reports` | 決策報告清單 |
 | GET | `/api/reports/{name}` | 單份報告 markdown(有路徑遍歷防護) |
+| GET | `/api/events` | 重要事件 + 關鍵日期(`data/events.json`,可加 `?symbol=` 過濾) |
 | GET | `/api/calibration` | 信心校準表 + Brier + 單調性 + regime 分層 |
 | POST | `/api/verify?fetch=true` | 執行驗證(先自動更新 K 線),回傳統計摘要 |
 
@@ -53,6 +55,9 @@ cd frontend && npm run dev        # http://localhost:3000
 - 預測總表:狀態彩色標籤、到期倒數、「可驗證」提醒橫幅
 - 「🔄 執行驗證」按鈕 → 呼叫 `/api/verify` → 自動刷新全部資料
 - 決策報告瀏覽器(markdown 渲染,含 GFM 表格)
+- 事件雷達獨立頁 **`/events`**:關鍵日期時間軸(倒數計時、預估標記、
+  過期切換)+ 重要事件卡片(多空影響標籤、標的過濾;資料來自 `/api/events`);
+  主儀表板以摘要卡連過去
 
 ## 擴充指引
 

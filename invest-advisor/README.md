@@ -187,6 +187,10 @@ python dashboard.py                    # 重新產出總覽,瀏覽器查看最�
 ```bash
 # 手動補記一筆預測(通常不需要,skill 會自動記)
 python log_prediction.py --file pred.json
+
+# 事件檔:報告中的重要事件與關鍵日期(skill 會自動記;規格見 report-templates.md)
+python log_events.py --file events_payload.json   # 合併寫入 data/events.json
+python log_events.py --show --symbol 3030.TW      # 查看目前事件(可過濾標的)
 ```
 
 ### 測試與評測
@@ -218,6 +222,7 @@ invest-advisor/
 │   ├── news_cache.db           # 新聞摘要快取(24h TTL)
 │   ├── predictions.jsonl       # 預測日誌(append-only,禁止事後修改)
 │   ├── outcomes.jsonl          # 判定結果(衍生檔,每次驗證重建)
+│   ├── events.json             # 重要事件 + 關鍵日期(log_events.py 維護,dashboard 圖形化)
 │   ├── dashboard.html          # 靜態版 view 產物(非報告)
 │   └── reports/                # 唯一報告目錄:<日期>_<主題>_<Q1..Q5|calibration>.md
 ├── assets/report-template.md   # 報告骨架

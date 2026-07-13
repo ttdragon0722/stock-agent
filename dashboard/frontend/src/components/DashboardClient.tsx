@@ -2,16 +2,21 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import Link from "next/link";
+
 import PredictionsTable from "@/components/MarketPredictions";
 import ReportsPanel from "@/components/ReportsCalendar";
 import StatsCards from "@/components/PerformanceCards";
-import { fetchPredictions, fetchReports, fetchStats, runVerify } from "@/lib/api";
-import type { PredictionRow, ReportInfo, Stats } from "@/lib/types";
+import {
+  fetchEvents, fetchPredictions, fetchReports, fetchStats, runVerify,
+} from "@/lib/api";
+import type { EventsDoc, PredictionRow, ReportInfo, Stats } from "@/lib/types";
 
 export default function DashboardClient() {
   const [rows, setRows] = useState<PredictionRow[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [reports, setReports] = useState<ReportInfo[]>([]);
+  const [events, setEvents] = useState<EventsDoc | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [verifyLog, setVerifyLog] = useState<string | null>(null);
@@ -19,14 +24,16 @@ export default function DashboardClient() {
   const reload = useCallback(async () => {
     setError(null);
     try {
-      const [predictions, summary, reportList] = await Promise.all([
+      const [predictions, summary, reportList, eventsDoc] = await Promise.all([
         fetchPredictions(),
         fetchStats(),
         fetchReports(),
+        fetchEvents(),
       ]);
       setRows(predictions.data);
       setStats(summary.data);
       setReports(reportList.data);
+      setEvents(eventsDoc.data);
     } catch (err) {
       setError(
         err instanceof Error
@@ -73,6 +80,18 @@ export default function DashboardClient() {
     { href: "#reports", label: "決策日曆" },
     { href: "#top", label: "回到頂部" },
   ];
+
+  const upcomingKeyDates = useMemo(() => {
+    if (!events) return 0;
+    const today = new Date();
+    const floor = new Date(
+      today.getFullYear(), today.getMonth(), today.getDate(),
+    ).getTime();
+    return events.key_dates.filter((item) => {
+      const target = new Date(`${item.date}T00:00:00`).getTime();
+      return !Number.isNaN(target) && target >= floor;
+    }).length;
+  }, [events]);
 
   return (
     <main
@@ -132,6 +151,12 @@ export default function DashboardClient() {
                   {item.label}
                 </a>
               ))}
+              <Link
+                href="/events"
+                className="whitespace-nowrap rounded-[6px] border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-cyan-100 transition hover:bg-cyan-300/20 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950"
+              >
+                關鍵事件 ↗
+              </Link>
             </nav>
             <div className="mt-3 hidden rounded-[8px] border border-white/10 bg-white/[0.035] p-3 xl:block">
               <p className="text-xs text-slate-500">快速狀態</p>
@@ -191,6 +216,28 @@ export default function DashboardClient() {
               </div>
               <PredictionsTable rows={rows} />
             </section>
+
+            <Link
+              href="/events"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-white/10 bg-white/[0.035] px-4 py-3 transition hover:border-cyan-300/30 hover:bg-cyan-300/[0.06] focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950"
+            >
+              <div>
+                <p className="text-xs font-medium uppercase text-cyan-200/70">
+                  EVENT RADAR
+                </p>
+                <p className="mt-1 text-sm font-semibold text-white">
+                  重要事件與關鍵日期
+                </p>
+              </div>
+              <p className="text-sm text-slate-400">
+                <span className="font-mono text-cyan-100">{upcomingKeyDates}</span>{" "}
+                個即將到來的關鍵日期 ·{" "}
+                <span className="font-mono text-amber-200">
+                  {events?.important_events.length ?? 0}
+                </span>{" "}
+                則重要事件 <span className="text-cyan-200/80">前往查看 →</span>
+              </p>
+            </Link>
 
             {verifyLog && (
               <details className="rounded-[8px] border border-white/10 bg-white/[0.035] p-4 text-xs text-slate-300">

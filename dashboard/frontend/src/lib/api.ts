@@ -1,5 +1,6 @@
 import type {
-  Envelope, PredictionRow, ReportContent, ReportInfo, Stats, VerifyResult,
+  Envelope, EventsDoc, PredictionRow, ReportContent, ReportInfo, Stats,
+  VerifyResult,
 } from "./types";
 
 const API_BASE =
@@ -26,6 +27,11 @@ export const fetchReports = () => request<ReportInfo[]>("/api/reports");
 
 export const fetchReport = (name: string) =>
   request<ReportContent>(`/api/reports/${encodeURIComponent(name)}`);
+
+export const fetchEvents = (symbol?: string) =>
+  request<EventsDoc>(
+    symbol ? `/api/events?symbol=${encodeURIComponent(symbol)}` : "/api/events",
+  );
 
 export const runVerify = () =>
   request<VerifyResult>("/api/verify?fetch=true", { method: "POST" });

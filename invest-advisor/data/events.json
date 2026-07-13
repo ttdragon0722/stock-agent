@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-07-13T06:16:02Z",
+  "important_events": [
+    {
+      "symbol": "2485.TW",
+      "date": "2026-07-10",
+      "title": "6 月營收 YoY +80.93%,累計 YoY +82.02%",
+      "description": "MoM +8.5%;高成長動能延續(MOPS A 級)",
+      "category": "revenue",
+      "impact": "bullish",
+      "source_url": "https://mops.twse.com.tw/mops/web/t05st10_ifrs",
+      "id": "c7f3ca29bce5",
+      "logged_at": "2026-07-13T06:16:02Z",
+      "reports": [
+        "2026-07-13_2485-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-10",
+      "title": "6 月營收 YoY 僅 +0.43%,連三月減速",
+      "description": "30% → 14.75% → 0.43%;上次報告失效條件「連兩月 <10%」第一隻腳落地,回踩買進計畫暫停",
+      "category": "revenue",
+      "impact": "bearish",
+      "source_url": "https://mops.twse.com.tw/mops/web/t05st10_ifrs",
+      "id": "a1d293ea3d19",
+      "logged_at": "2026-07-13T06:03:02Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-02",
+      "title": "外資單日倒貨 372 萬股,20 日淨賣 370 萬股",
+      "description": "外資由小買轉大賣後持續淨賣,投信全程觀望;籌碼面無聰明錢佈局跡象",
+      "category": "chips",
+      "impact": "bearish",
+      "id": "acb8ab399ef0",
+      "logged_at": "2026-07-13T06:03:02Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-01",
+      "title": "公告配息 0.6 元,7/21 除息(由預估轉確定)",
+      "description": "較上次 1 元縮水四成,但優於去年同期 0.36;當期殖利率約 0.57%",
+      "category": "dividend",
+      "impact": "neutral",
+      "source_url": "https://finance.ettoday.net/news/3193281",
+      "id": "584b5fb2a8b1",
+      "logged_at": "2026-07-13T06:16:01Z",
+      "reports": [
+        "2026-07-13_0050-TW_Q1.md"
+      ]
+    }
+  ],
+  "key_dates": [
+    {
+      "symbol": "2330.TW",
+      "date": "2026-07-16",
+      "label": "台積電法說會(牽動半導體設備族群情緒)",
+      "date_type": "earnings_call",
+      "status": "confirmed",
+      "note": "若上修資本支出,設備族群(含德律)直接受惠",
+      "id": "10ab183a94a4",
+      "logged_at": "2026-07-13T06:03:02Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
+      "label": "0050 除息 0.6 元(最後買進日 7/20)",
+      "date_type": "ex_dividend",
+      "status": "confirmed",
+      "note": "7/16 法說後的 7/17、7/20 買進仍可參與配息;除息後價位機械下修 0.6(SL 103.3)",
+      "id": "55788750005e",
+      "logged_at": "2026-07-13T06:16:01Z",
+      "reports": [
+        "2026-07-13_0050-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-10",
+      "label": "0050 配息發放日",
+      "date_type": "dividend_pay",
+      "status": "confirmed",
+      "note": "來源:財訊/ETtoday/中時 雙來源交叉",
+      "id": "27e0dc748f16",
+      "logged_at": "2026-07-13T06:16:01Z",
+      "reports": [
+        "2026-07-13_0050-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "2485.TW",
+      "date": "2026-08-10",
+      "label": "7 月營收公告截止 — 基本面論點觀察點",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "YoY 轉負或 Q2 財報毛利率顯著低於 Q1 → 題材證偽,不再等買點",
+      "id": "7eb59a2002d2",
+      "logged_at": "2026-07-13T06:16:02Z",
+      "reports": [
+        "2026-07-13_2485-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "7 月營收公告截止 — 基本面證偽觀察點",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "YoY <10% 則「連兩月 <10%」失效條件成立,題材證偽",
+      "id": "f4fa55097f3f",
+      "logged_at": "2026-07-13T06:03:02Z",
+      "reports": [
+        "2026-07-13_3030-TW_Q1.md"
+      ]
+    }
+  ]
+}

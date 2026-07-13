@@ -139,6 +139,9 @@ R:R < 1.5 → 表格照給但結論改「建議等待」,並寫明等待條件�
 3. 使用者問「等配息要買多少」→ 在本區塊後接資金試算:
    目標配息金額 ÷ 每單位配息 = 所需單位數,再乘現價得所需資金,
    並提醒**除息日前買進才有配息、貼息風險存在**
+4. 本區塊的「下次除息(預估)」與「二階段公告日」屬 Step 5.5 的
+   **必記時點**——事件萃取時必須寫入 key_dates(`ex_dividend`,
+   預估日標 `estimated`),見「事件萃取規格」規則 3
 
 ### B. 比較表格區塊(問題比較 ≥ 2 檔標的時**必附**)
 
@@ -167,6 +170,62 @@ R:R < 1.5 → 表格照給但結論改「建議等待」,並寫明等待條件�
    不硬選單一贏家
 3. 涉及資金分配(「3 萬怎麼分」)→ 依 Q5 規則補配置對比表,
    並各記一筆預測日誌;純比較(無買賣決策)可只記主要標的一筆
+
+## 事件萃取規格(events.json;SKILL.md Step 5.5)
+
+報告存檔後,把報告內容整理成 payload JSON 存暫存檔,執行
+`python log_events.py --file <file>` 合併進 `data/events.json`
+(兩區塊文件:`important_events` 重要事件 + `key_dates` 關鍵日期和時間;
+腳本以內容雜湊去重,重跑不會重複)。
+
+```json
+{
+  "report": "2026-07-13_3030-TW_Q1.md",
+  "important_events": [
+    {"symbol": "3030.TW", "date": "2026-07-10",
+     "title": "6 月營收 YoY +0.43%,連三月減速",
+     "description": "30%→14.75%→0.43%;失效條件第一隻腳落地",
+     "category": "revenue", "impact": "bearish",
+     "source_url": "https://mops.twse.com.tw/..."}
+  ],
+  "key_dates": [
+    {"symbol": "3030.TW", "date": "2026-08-10",
+     "label": "7 月營收公告截止(基本面證偽觀察點)",
+     "date_type": "revenue_release", "status": "estimated",
+     "note": "YoY <10% 則題材證偽"},
+    {"symbol": "2330.TW", "date": "2026-07-16", "time": "14:00",
+     "label": "台積電法說會(牽動設備族群)",
+     "date_type": "earnings_call", "status": "confirmed"}
+  ]
+}
+```
+
+規則:
+
+1. **important_events**(已發生/已確認的事實)必填:
+   `symbol, date(YYYY-MM-DD), title, category, impact(bullish|bearish|neutral)`;
+   選填 `description, source_url` 與任意擴充欄位(會原樣保留)。
+   category 建議詞彙:`earnings, revenue, dividend, chips, macro, policy,
+   corporate, technical, industry, regulation, other`(可自訂,腳本只警告)。
+2. **key_dates**(未來時點)必填:`symbol, date, label, date_type`;
+   選填 `time(HH:MM), status(confirmed|estimated,預設 estimated), note`。
+   date_type 建議詞彙:`earnings_call, earnings_release, revenue_release,
+   ex_dividend, ex_rights, dividend_pay, shareholder_meeting, fed_meeting,
+   cpi_release, macro_data, news_release, policy_announcement, lockup_expiry,
+   option_expiry, product_launch, horizon_end, other`。
+3. **必記時點(報告內文提到就必須進 key_dates,漏記視為 Step 5.5 未完成)**:
+   - 除息日/除權日(`ex_dividend`/`ex_rights`)與配息發放日(`dividend_pay`)
+     ——配息數據區塊(附加區塊 A)裡的「下次除息」與「二階段公告日」必記
+   - 各類**消息/公告的發布日**:財報公布(`earnings_release`)、法說會
+     (`earnings_call`)、月營收公告(`revenue_release`)、重大訊息或產品
+     發表(`news_release`/`product_launch`)、政策/總經數據發布
+     (`policy_announcement`/`fed_meeting`/`cpi_release`/`macro_data`)
+   - 失效條件的觀察期限(`horizon_end` 或對應類型)
+4. 其餘事件維持挑選標準:**寫進報告論據或失效條件的才記**,不要把整份
+   新聞清單倒進去;每份報告通常 1–4 則事件、關鍵日期依必記清單不設上限。
+5. 預估日期(如「8/10 前公告」)標 `status: "estimated"` 並在 note 說明;
+   只知道月份的用該月最後可能日並在 note 註明推估基礎。
+6. `id / logged_at / reports` 由腳本生成,不要手填。
 
 ## prediction-meta 規格
 

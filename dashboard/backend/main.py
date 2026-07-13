@@ -26,6 +26,7 @@ sys.path.insert(0, str(SKILL_SCRIPTS))
 import calibration_report as cal  # noqa: E402
 import common  # noqa: E402
 import dashboard as dash  # noqa: E402
+import log_events as le  # noqa: E402
 import verify_predictions as vp  # noqa: E402
 
 VERIFY_TIMEOUT_SECONDS = 300
@@ -86,6 +87,17 @@ def report_content(name: str) -> dict:
             "data": {"name": name,
                      "markdown": path.read_text(encoding="utf-8")},
             "error": None}
+
+
+@app.get("/api/events")
+def events(symbol: str | None = None) -> dict:
+    """重要事件 + 關鍵日期(data/events.json,由 log_events.py 維護)。"""
+    doc = le.read_events_doc()
+    if symbol:
+        doc = le.filter_doc(doc, symbol)
+    return {"success": True, "data": doc, "error": None,
+            "meta": {"total_events": len(doc["important_events"]),
+                     "total_key_dates": len(doc["key_dates"])}}
 
 
 @app.get("/api/calibration")

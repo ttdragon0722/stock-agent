@@ -147,6 +147,25 @@ python fetch_mops.py --symbol 2330.TW     # MOPS 重大訊息+月營收
 `2026-07-04_TW-screener_Q3.md`)。完整存檔規範見
 report-templates.md「存檔規範」一節——禁止自創目錄或命名。
 
+### Step 5.5 — 事件萃取(有報告就要跑,不可省略)
+
+報告存檔後,把報告中的**重要事件**與**關鍵日期和時間**整理成 payload JSON
+(規格見 report-templates.md「事件萃取規格」),存暫存檔後執行:
+
+```bash
+python log_events.py --file <events_payload.json>
+```
+
+- **important_events(重要事件)**:已發生/已確認、影響判斷的事實
+  (營收公告、法說結論、外資動向轉折、政策事件…),每則標多空影響
+- **key_dates(關鍵日期和時間)**:報告提到的未來時點。其中**除息日/
+  除權日、配息發放日,以及任何消息/公告的發布日**(財報、法說、月營收、
+  重大訊息、政策/總經數據)與失效條件觀察期限屬**必記清單**——
+  報告內文提到卻沒進 key_dates 視為本步驟未完成;
+  不確定的日期標 `estimated`(完整清單見 report-templates.md 規則 3)
+- 腳本自動去重與排序,重跑同標的只會更新既有事件,不會重複
+- 產出檔 `data/events.json` 供 dashboard `/api/events` 圖形化呈現
+
 ### Step 6 — 寫入預測日誌(不可省略)
 
 把報告尾端 prediction-meta 的 JSON 存檔後執行:
@@ -166,6 +185,7 @@ Q3 推薦的每一檔各記一筆。
 | 「開 dashboard」「預測總覽」「哪些到期了」 | 優先啟動 Web 版:執行 `D:\coding\stock-agent\dashboard\start.ps1`(FastAPI :8787 + Next.js :3000,會自動開瀏覽器;已啟動則直接開 http://localhost:3000)。Node 不可用時退回 `dashboard.py` 靜態版 |
 | 「看預測紀錄」 | 讀 `data/predictions.jsonl` 整理成表格 |
 | 「看歷史報告」 | 列出/開啟 `data/reports/*.md` |
+| 「看重要事件」「最近有什麼關鍵日期」 | 跑 `log_events.py --show`(可加 `--symbol`),整理成表格 |
 | 「評分系統準嗎」「校準報告」 | 跑 `calibration_report.py`(<50 筆時提醒樣本不足) |
 
 ```bash
