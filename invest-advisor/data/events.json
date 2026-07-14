@@ -1,7 +1,49 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-07-13T08:38:09Z",
+  "updated_at": "2026-07-14T05:43:45Z",
   "important_events": [
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-14",
+      "title": "台股盤中重挫逾1400點,0050爆量長下影守住SMA50",
+      "description": "美伊衝突+費半-4.78%+Waller放鷹;0050低點102.25刺破S1後收104.25,量2.47億股(昨日3.8倍);^TWII收44644守住44454",
+      "category": "technical",
+      "impact": "neutral",
+      "source_url": "https://www.chinatimes.com/realtimenews/20260714001348-260410",
+      "id": "7788d525a186",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-14",
+      "title": "美伊衝突升溫+費半 -4.78%,台股系統性重挫(^TWII 收 44,644,-1.62%)",
+      "description": "荷莫茲海峽風險急升,電子權值全面下殺(聯發科 -7%、日月光 -8.5%),外資台指期淨空單逾 8.1 萬口;3030 今日跌勢一半屬大盤系統性賣壓",
+      "category": "macro",
+      "impact": "bearish",
+      "source_url": "https://udn.com/news/story/7251/9626413",
+      "id": "43e6cdeb29e0",
+      "logged_at": "2026-07-14T05:43:45Z",
+      "reports": [
+        "2026-07-14_3030-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-14",
+      "title": "放量跌破 293-302 平台下緣,收 291.5(-2.51%)",
+      "description": "O299.5/H299.5/L280/C291.5,量 3,376 張(vol_ratio 1.34);盤中刺破 281.5 至 280 後收回;7/13 報告的轉空失效條件(收破 293)正式觸發,293 由支撐轉第一壓力",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://tw.stock.yahoo.com/quote/3030.TW",
+      "id": "3fb9d09ce936",
+      "logged_at": "2026-07-14T05:43:45Z",
+      "reports": [
+        "2026-07-14_3030-TW_Q4.md"
+      ]
+    },
     {
       "symbol": "3030.TW",
       "date": "2026-07-13",
@@ -42,6 +84,34 @@
       "logged_at": "2026-07-13T08:38:09Z",
       "reports": [
         "2026-07-13_3030-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-13",
+      "title": "外資連6日賣超0050,20日累計-1.39億股",
+      "description": "外資7/6起連續淨賣;投信20日+3489萬股、融資融券同步下降,內外資對做",
+      "category": "chips",
+      "impact": "bearish",
+      "source_url": "https://www.twse.com.tw/",
+      "id": "05dc65b287b0",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-11",
+      "title": "美國對伊朗第三輪空襲,荷莫茲海峽航運驟停",
+      "description": "約140個軍事目標;油價盤中+10%,通膨與提前升息預期升溫,系統性風險進行中",
+      "category": "macro",
+      "impact": "bearish",
+      "source_url": "https://www.cnn.com/2026/07/11/world/live-news/iran-war-trump",
+      "id": "37bc68a65680",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
       ]
     },
     {
@@ -171,6 +241,20 @@
     {
       "symbol": "2330.TW",
       "date": "2026-07-16",
+      "time": "14:00",
+      "label": "台積電法說會(0050主情境定向事件)",
+      "date_type": "earnings_call",
+      "status": "confirmed",
+      "note": "共識:Q2營收QoQ+11-12%、毛利率68-69%;好但不夠驚豔即有賣事實風險",
+      "id": "33d51bc70100",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "2330.TW",
+      "date": "2026-07-16",
       "label": "台積電法說會(牽動半導體設備族群情緒)",
       "date_type": "earnings_call",
       "status": "confirmed",
@@ -192,6 +276,19 @@
       "logged_at": "2026-07-13T07:23:25Z",
       "reports": [
         "2026-07-13_portfolio-allocation_Q5.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
+      "label": "0050 除息日(參與配息最後買進日 7/20)",
+      "date_type": "ex_dividend",
+      "status": "estimated",
+      "note": "沿用 7/13 報告之公告日期;情境①參與除息者留意 7/20",
+      "id": "250e7113a026",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
       ]
     },
     {
@@ -262,6 +359,19 @@
     {
       "symbol": "3030.TW",
       "date": "2026-08-10",
+      "label": "7 月營收公告截止(空方「動能凍結」論點證偽觀察點)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "YoY ≥15% 且外資翻買 → 偏空論點證偽;YoY <10% 則連兩月低成長確認",
+      "id": "874855fa2be6",
+      "logged_at": "2026-07-14T05:43:45Z",
+      "reports": [
+        "2026-07-14_3030-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
       "label": "7 月營收公告截止 — 基本面證偽觀察點",
       "date_type": "revenue_release",
       "status": "estimated",
@@ -296,6 +406,32 @@
       "logged_at": "2026-07-13T08:23:10Z",
       "reports": [
         "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-13",
+      "label": "Q4 點位分析失效條件觀察期滿(30天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "失效:0050 日線收破 102.25 或 ^TWII 收破 44454",
+      "id": "579bac9f8bb5",
+      "logged_at": "2026-07-14T05:43:03Z",
+      "reports": [
+        "2026-07-14_0050-TW_Q4.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-13",
+      "label": "7/14 Q4 偏空預測觀察期限(30 天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "失效條件:放量收回 293 轉中性/收上 302 轉多;收破 281.5 下看 272.5/264",
+      "id": "c522fe7f32ac",
+      "logged_at": "2026-07-14T05:43:45Z",
+      "reports": [
+        "2026-07-14_3030-TW_Q4.md"
       ]
     },
     {

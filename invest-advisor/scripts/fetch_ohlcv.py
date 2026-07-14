@@ -91,6 +91,8 @@ def parse_yahoo_chart(symbol: str, timeframe: str, payload: dict,
             continue  # nulls appear on halted/partial bars
         vols = quote.get("volume", [])
         volume = vols[i] if i < len(vols) and vols[i] is not None else 0
+        if volume == 0 and o == h == l == c:
+            continue  # 休市/停牌日的 placeholder bar(四價=前收、零量);漲停鎖死仍有量,不會誤殺
         rows.append((symbol.upper(), timeframe, int(ts),
                      float(o), float(h), float(l), float(c), float(volume),
                      "yahoo", fetched_at))
