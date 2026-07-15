@@ -56,13 +56,20 @@ def predictions() -> dict:
     rows = _load_rows()
     return {"success": True, "data": rows, "error": None,
             "meta": {"total": len(rows),
-                     "actionable": dash.count_actionable(rows)}}
+                     "actionable": dash.count_actionable(rows),
+                     "unfilled": {
+                         "total": dash.count_unfilled(rows),
+                         "stock": dash.count_unfilled(rows, "stock"),
+                         "crypto": dash.count_unfilled(rows, "crypto"),
+                     }}}
 
 
 @app.get("/api/stats")
 def stats() -> dict:
+    """績效統計:all 全體、stock 台股、crypto 加密貨幣分開計算。"""
     outcomes = common.read_jsonl(common.OUTCOMES_FILE)
-    return {"success": True, "data": vp.summarize(outcomes), "error": None}
+    return {"success": True, "data": vp.summarize_by_market(outcomes),
+            "error": None}
 
 
 @app.get("/api/reports")

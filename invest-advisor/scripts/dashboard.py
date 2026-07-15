@@ -43,15 +43,18 @@ def build_rows(predictions: list[dict], outcomes: list[dict],
         days_left = max(0, -(-(horizon_end - now_ts) // 86400))  # ceil
         status = outcome.get("status", "未驗證")
         resolved = status in RESOLVED_STATUSES
+        filled = outcome.get("filled")
+        entry_zone = pred.get("entry_zone")
         rows.append({
             "id": pred.get("id"),
             "asset": pred["asset"],
+            "asset_type": pred.get("asset_type"),
             "question_type": pred.get("question_type", "?"),
             "direction": pred["direction"],
             "recommendation_score": pred.get("recommendation_score"),
             "confidence_score": pred.get("confidence_score"),
             "price_at_analysis": pred.get("price_at_analysis"),
-            "entry_zone": pred.get("entry_zone"),
+            "entry_zone": entry_zone,
             "stop_loss": pred.get("stop_loss"),
             "take_profit": pred.get("take_profit"),
             "risk_reward": pred.get("risk_reward"),
@@ -65,12 +68,23 @@ def build_rows(predictions: list[dict], outcomes: list[dict],
             "resolved": resolved,
             "verifiable_now": (now_ts >= horizon_end or status == "NO_DATA")
                               and not resolved,
+            # 尚未成交的掛單:有進場區、未結案、且驗證尚未確認 filled。
+            # filled 為 None(從未驗證)視同未成交;NOT_FILLED 已結案不算。
+            "filled": filled,
+            "unfilled": bool(entry_zone) and not resolved
+                        and filled is not True,
         })
     return sorted(rows, key=lambda r: r["logged"], reverse=True)
 
 
 def count_actionable(rows: list[dict]) -> int:
     return sum(1 for r in rows if r["verifiable_now"])
+
+
+def count_unfilled(rows: list[dict], asset_type: str | None = None) -> int:
+    """未成交掛單數;asset_type 指定 stock/crypto 時只計該市場。"""
+    return sum(1 for r in rows if r["unfilled"]
+               and (asset_type is None or r.get("asset_type") == asset_type))
 
 
 # ---------------------------------------------------------------- render

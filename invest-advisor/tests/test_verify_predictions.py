@@ -261,6 +261,31 @@ class TestSummarize:
         assert funnel["rejected_avg_return_pct"] == 1.0
         assert funnel["edge_pct"] == 4.0
 
+    def test_summarize_by_market_splits_stock_and_crypto(self):
+        outcomes = [
+            {"status": "WIN", "asset_type": "stock", "r_multiple": 2.0,
+             "direction_correct": True, "excess_return_pct": 3.0},
+            {"status": "LOSS", "asset_type": "stock", "r_multiple": -1.0,
+             "direction_correct": False, "excess_return_pct": -2.0},
+            {"status": "WIN", "asset_type": "crypto", "r_multiple": 1.5,
+             "direction_correct": True, "excess_return_pct": 4.0},
+        ]
+        split = vp.summarize_by_market(outcomes)
+        assert set(split.keys()) == {"all", "stock", "crypto"}
+        assert split["all"]["total"] == 3
+        assert split["stock"]["total"] == 2
+        assert split["stock"]["win_rate"] == 0.5
+        assert split["crypto"]["total"] == 1
+        assert split["crypto"]["win_rate"] == 1.0
+
+    def test_summarize_by_market_missing_asset_type_only_in_all(self):
+        outcomes = [{"status": "WIN", "r_multiple": 1.0,
+                     "direction_correct": True, "excess_return_pct": 1.0}]
+        split = vp.summarize_by_market(outcomes)
+        assert split["all"]["total"] == 1
+        assert split["stock"]["total"] == 0
+        assert split["crypto"]["total"] == 0
+
     def test_noise_band_exclusions_counted(self):
         outcomes = [
             {"status": "RESOLVED_DIRECTIONAL", "question_type": "Q2_long_hold",

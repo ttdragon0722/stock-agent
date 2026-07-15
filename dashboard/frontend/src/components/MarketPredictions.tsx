@@ -13,6 +13,20 @@ type MarketGroup = {
   rows: PredictionRow[];
 };
 
+type FilterMode = "all" | "unfilled" | "unverified" | "verified";
+
+// 未驗證 = 尚未結案(等待中/開倉中);已驗證 = 已有判定結果(勝/負/未成交結案…)
+const FILTER_OPTIONS: {
+  id: FilterMode;
+  label: string;
+  match: (row: PredictionRow) => boolean;
+}[] = [
+  { id: "all", label: "全部", match: () => true },
+  { id: "unfilled", label: "未成交掛單", match: (row) => row.unfilled },
+  { id: "unverified", label: "未驗證", match: (row) => !row.resolved },
+  { id: "verified", label: "已驗證", match: (row) => row.resolved },
+];
+
 const CRYPTO_HINTS = [
   "USDT",
   "USDC",
@@ -88,6 +102,13 @@ function isCryptoAsset(asset: string) {
     value.endsWith("-USD") ||
     value.endsWith("USD")
   );
+}
+
+// 市場分類以預測日誌的 asset_type 為準(單一事實來源);
+// 舊資料缺 asset_type 時 fallback 用代號啟發式判斷。
+function isCryptoRow(row: PredictionRow) {
+  if (row.asset_type) return row.asset_type === "crypto";
+  return isCryptoAsset(row.asset);
 }
 
 function formatValue(value: number | null | undefined, compact = false) {
@@ -178,6 +199,7 @@ function MarketTable({ group }: { group: MarketGroup }) {
   ).length;
   const open = group.rows.filter((row) => row.status === "OPEN").length;
   const due = group.rows.filter((row) => row.verifiable_now).length;
+  const unfilled = group.rows.filter((row) => row.unfilled).length;
 
   return (
     <section className="min-w-0 rounded-[8px] border border-white/10 bg-white/[0.035]">
@@ -186,7 +208,7 @@ function MarketTable({ group }: { group: MarketGroup }) {
           <h3 className="text-base font-semibold text-white">{group.title}</h3>
           <p className="mt-1 text-sm text-slate-500">{group.subtitle}</p>
         </div>
-        <div className="grid grid-cols-3 gap-2 text-center">
+        <div className="grid grid-cols-4 gap-2 text-center">
           <div className="rounded-[6px] bg-black/20 px-3 py-2">
             <p className="font-mono text-sm text-slate-100">{group.rows.length}</p>
             <p className="text-[11px] text-slate-500">總筆數</p>
@@ -194,6 +216,10 @@ function MarketTable({ group }: { group: MarketGroup }) {
           <div className="rounded-[6px] bg-black/20 px-3 py-2">
             <p className="font-mono text-sm text-cyan-100">{open}</p>
             <p className="text-[11px] text-slate-500">開倉</p>
+          </div>
+          <div className="rounded-[6px] bg-black/20 px-3 py-2">
+            <p className="font-mono text-sm text-orange-200">{unfilled}</p>
+            <p className="text-[11px] text-slate-500">未成交</p>
           </div>
           <div className="rounded-[6px] bg-black/20 px-3 py-2">
             <p className="font-mono text-sm text-amber-100">{due || winning}</p>
@@ -361,19 +387,27 @@ export default function MarketPredictions({ rows }: { rows: PredictionRow[] }) {
         id: "tw",
         title: "台股",
         subtitle: "以交易日節奏檢視進出場價位與驗證期限",
-        rows: rows.filter((row) => !isCryptoAsset(row.asset)),
+        rows: rows.filter((row) => !isCryptoRow(row)),
       },
       {
         id: "crypto",
         title: "加密貨幣",
         subtitle: "適合 24/7 市場的快速風險掃描",
-        rows: rows.filter((row) => isCryptoAsset(row.asset)),
+        rows: rows.filter((row) => isCryptoRow(row)),
       },
     ],
     [rows],
   );
   const [activeMarket, setActiveMarket] = useState<MarketId>("tw");
+  const [filterMode, setFilterMode] = useState<FilterMode>("all");
   const activeGroup = groups.find((group) => group.id === activeMarket) ?? groups[0];
+  // 篩選計數各市場分開計算(切換市場 tab 時顯示該市場自己的數字)
+  const activeFilter =
+    FILTER_OPTIONS.find((option) => option.id === filterMode) ?? FILTER_OPTIONS[0];
+  const visibleGroup = useMemo<MarketGroup>(
+    () => ({ ...activeGroup, rows: activeGroup.rows.filter(activeFilter.match) }),
+    [activeGroup, activeFilter],
+  );
 
   if (!rows.length) {
     return (
@@ -403,8 +437,42 @@ export default function MarketPredictions({ rows }: { rows: PredictionRow[] }) {
             <span className="ml-2 font-mono text-xs text-slate-500">{group.rows.length}</span>
           </button>
         ))}
+        <div
+          className="ml-auto flex flex-wrap gap-1"
+          role="radiogroup"
+          aria-label="驗證狀態篩選"
+        >
+          {FILTER_OPTIONS.map((option) => {
+            const count = activeGroup.rows.filter(option.match).length;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                role="radio"
+                aria-checked={filterMode === option.id}
+                onClick={() => setFilterMode(option.id)}
+                className={`min-h-10 rounded-[6px] border px-3 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-slate-950 ${
+                  filterMode === option.id
+                    ? "border-orange-300/40 bg-orange-300/15 text-orange-100"
+                    : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.045] hover:text-slate-100"
+                }`}
+              >
+                {option.label}
+                <span className="ml-1.5 font-mono text-xs text-slate-500">
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
-      <MarketTable group={activeGroup} />
+      {!visibleGroup.rows.length && activeGroup.rows.length ? (
+        <div className="rounded-[8px] border border-white/10 bg-white/[0.035] px-4 py-10 text-center text-sm text-slate-500">
+          {activeGroup.title}目前沒有「{activeFilter.label}」的紀錄。
+        </div>
+      ) : (
+        <MarketTable group={visibleGroup} />
+      )}
     </div>
   );
 }

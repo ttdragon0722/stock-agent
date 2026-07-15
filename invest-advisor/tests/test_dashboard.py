@@ -61,6 +61,61 @@ class TestBuildRows:
         assert rows[0]["falsification_condition"] is None
 
 
+class TestUnfilled:
+    """unfilled = 有交易計畫(entry_zone)、未結案、且尚未確認成交的掛單。"""
+
+    def test_entry_zone_pending_is_unfilled(self):
+        pred = make_pred(entry_zone=[95.0, 98.0])
+        rows = db.build_rows([pred], [], T0 + 3 * DAY)
+        assert rows[0]["filled"] is None
+        assert rows[0]["unfilled"] is True
+
+    def test_filled_open_position_not_unfilled(self):
+        pred = make_pred(entry_zone=[95.0, 98.0])
+        outcomes = [{"id": "p1", "status": "OPEN", "filled": True,
+                     "fill_price": 96.0}]
+        rows = db.build_rows([pred], outcomes, T0 + 3 * DAY)
+        assert rows[0]["filled"] is True
+        assert rows[0]["unfilled"] is False
+
+    def test_verified_pending_not_filled_is_unfilled(self):
+        pred = make_pred(entry_zone=[95.0, 98.0])
+        outcomes = [{"id": "p1", "status": "PENDING", "filled": False}]
+        rows = db.build_rows([pred], outcomes, T0 + 3 * DAY)
+        assert rows[0]["unfilled"] is True
+
+    def test_resolved_not_filled_is_not_unfilled(self):
+        # 到期未成交 → NOT_FILLED 已結案,不再是「等待成交中」
+        pred = make_pred(entry_zone=[95.0, 98.0])
+        outcomes = [{"id": "p1", "status": "NOT_FILLED", "filled": False}]
+        rows = db.build_rows([pred], outcomes, T0 + 20 * DAY)
+        assert rows[0]["unfilled"] is False
+
+    def test_no_entry_zone_never_unfilled(self):
+        rows = db.build_rows([make_pred()], [], T0 + 3 * DAY)
+        assert rows[0]["unfilled"] is False
+
+    def test_count_unfilled(self):
+        preds = [make_pred(id="a", entry_zone=[95.0, 98.0]), make_pred(id="b")]
+        rows = db.build_rows(preds, [], T0)
+        assert db.count_unfilled(rows) == 1
+
+    def test_count_unfilled_split_by_asset_type(self):
+        preds = [
+            make_pred(id="a", entry_zone=[95.0, 98.0], asset_type="stock"),
+            make_pred(id="b", entry_zone=[1.0, 2.0], asset_type="crypto"),
+            make_pred(id="c", asset_type="crypto"),  # 無交易計畫,不計
+        ]
+        rows = db.build_rows(preds, [], T0)
+        assert db.count_unfilled(rows) == 2
+        assert db.count_unfilled(rows, asset_type="stock") == 1
+        assert db.count_unfilled(rows, asset_type="crypto") == 1
+
+    def test_asset_type_carried(self):
+        rows = db.build_rows([make_pred(asset_type="crypto")], [], T0)
+        assert rows[0]["asset_type"] == "crypto"
+
+
 class TestRender:
     def test_html_contains_asset_and_banner(self):
         rows = db.build_rows([make_pred()], [], T0 + 20 * DAY)

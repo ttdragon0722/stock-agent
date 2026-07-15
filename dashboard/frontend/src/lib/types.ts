@@ -10,6 +10,8 @@ export interface Envelope<T> {
 export interface PredictionRow {
   id: string;
   asset: string;
+  /** 來自預測日誌的市場別;舊資料可能為 null(前端 fallback 用代號判斷) */
+  asset_type: "stock" | "crypto" | null;
   question_type: string;
   direction: "long" | "short" | "neutral";
   recommendation_score: number | null;
@@ -28,6 +30,10 @@ export interface PredictionRow {
   excess_return_pct: number | null;
   resolved: boolean;
   verifiable_now: boolean;
+  /** 驗證結果的成交旗標;null = 尚未驗證過 */
+  filled: boolean | null;
+  /** 有進場區、未結案、且尚未確認成交的掛單 */
+  unfilled: boolean;
 }
 
 export interface Stats {
@@ -38,6 +44,13 @@ export interface Stats {
   direction_accuracy: number | null;
   avg_excess_return_pct: number | null;
   sample_warning: string | null;
+}
+
+/** /api/stats:全體與台股/加密貨幣分開計算的績效統計 */
+export interface StatsByMarket {
+  all: Stats;
+  stock: Stats;
+  crypto: Stats;
 }
 
 export interface ReportInfo {

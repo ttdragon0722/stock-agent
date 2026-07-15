@@ -1,6 +1,6 @@
 import type {
-  Envelope, EventsDoc, PredictionRow, ReportContent, ReportInfo, Stats,
-  VerifyResult,
+  Envelope, EventsDoc, PredictionRow, ReportContent, ReportInfo,
+  StatsByMarket, VerifyResult,
 } from "./types";
 
 const API_BASE =
@@ -21,7 +21,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<Envelope<T>
 export const fetchPredictions = () =>
   request<PredictionRow[]>("/api/predictions");
 
-export const fetchStats = () => request<Stats>("/api/stats");
+export const fetchStats = () => request<StatsByMarket>("/api/stats");
 
 export const fetchReports = () => request<ReportInfo[]>("/api/reports");
 

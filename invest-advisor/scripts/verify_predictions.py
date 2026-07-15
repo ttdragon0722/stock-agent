@@ -267,6 +267,20 @@ def summarize(outcomes: list[dict]) -> dict:
     return stats
 
 
+def summarize_by_market(outcomes: list[dict]) -> dict:
+    """全體 + 台股/加密貨幣分開的統計。Pure function.
+
+    缺 asset_type 的舊紀錄只計入 all,不歸入任一市場。
+    """
+    return {
+        "all": summarize(outcomes),
+        "stock": summarize(
+            [o for o in outcomes if o.get("asset_type") == "stock"]),
+        "crypto": summarize(
+            [o for o in outcomes if o.get("asset_type") == "crypto"]),
+    }
+
+
 # ---------------------------------------------------------------------- io
 
 def needed_symbols(predictions: list[dict]) -> set[tuple[str, str]]:

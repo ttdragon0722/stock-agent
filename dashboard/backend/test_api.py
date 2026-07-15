@@ -18,16 +18,39 @@ class TestReadEndpoints:
         body = r.json()
         assert body["success"] is True
         assert isinstance(body["data"], list)
-        assert {"total", "actionable"} <= set(body["meta"].keys())
+        assert {"total", "actionable", "unfilled"} <= set(body["meta"].keys())
         if body["data"]:
             row = body["data"][0]
-            assert {"id", "asset", "status", "days_left",
-                    "verifiable_now", "falsification_condition"} <= set(row.keys())
+            assert {"id", "asset", "asset_type", "status", "days_left",
+                    "verifiable_now", "falsification_condition", "filled",
+                    "unfilled"} <= set(row.keys())
 
-    def test_stats(self):
+    def test_predictions_unfilled_split_by_market(self):
+        body = client.get("/api/predictions").json()
+        meta = body["meta"]["unfilled"]
+        assert {"total", "stock", "crypto"} <= set(meta.keys())
+        unfilled_rows = [r for r in body["data"] if r["unfilled"]]
+        assert meta["total"] == len(unfilled_rows)
+        assert meta["stock"] == sum(
+            1 for r in unfilled_rows if r["asset_type"] == "stock")
+        assert meta["crypto"] == sum(
+            1 for r in unfilled_rows if r["asset_type"] == "crypto")
+        for row in unfilled_rows:
+            assert row["entry_zone"]          # 沒有交易計畫不可能是未成交掛單
+            assert row["resolved"] is False   # 已結案不算等待成交中
+            assert row["filled"] is not True
+
+    def test_stats_split_by_market(self):
         r = client.get("/api/stats")
         assert r.status_code == 200
-        assert "by_status" in r.json()["data"]
+        data = r.json()["data"]
+        assert {"all", "stock", "crypto"} <= set(data.keys())
+        for market in ("all", "stock", "crypto"):
+            assert "by_status" in data[market]
+            assert "win_rate" in data[market]
+        # 市場分割不能遺漏或重複計數(缺 asset_type 的舊紀錄只在 all)
+        assert data["stock"]["total"] + data["crypto"]["total"] \
+            <= data["all"]["total"]
 
     def test_reports_list(self):
         r = client.get("/api/reports")

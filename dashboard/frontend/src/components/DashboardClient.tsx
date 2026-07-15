@@ -10,11 +10,13 @@ import StatsCards from "@/components/PerformanceCards";
 import {
   fetchEvents, fetchPredictions, fetchReports, fetchStats, runVerify,
 } from "@/lib/api";
-import type { EventsDoc, PredictionRow, ReportInfo, Stats } from "@/lib/types";
+import type {
+  EventsDoc, PredictionRow, ReportInfo, StatsByMarket,
+} from "@/lib/types";
 
 export default function DashboardClient() {
   const [rows, setRows] = useState<PredictionRow[]>([]);
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<StatsByMarket | null>(null);
   const [reports, setReports] = useState<ReportInfo[]>([]);
   const [events, setEvents] = useState<EventsDoc | null>(null);
   const [error, setError] = useState<string | null>(null);

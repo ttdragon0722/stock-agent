@@ -1,4 +1,16 @@
-import type { Stats } from "@/lib/types";
+"use client";
+
+import { useState } from "react";
+
+import type { Stats, StatsByMarket } from "@/lib/types";
+
+type MarketKey = keyof StatsByMarket;
+
+const MARKET_TABS: { id: MarketKey; label: string }[] = [
+  { id: "all", label: "全部" },
+  { id: "stock", label: "台股" },
+  { id: "crypto", label: "加密貨幣" },
+];
 
 const formatPercent = (value: number | null | undefined) =>
   value == null ? "--" : `${(value * 100).toFixed(1)}%`;
@@ -8,8 +20,8 @@ const formatNumber = (
   options?: Intl.NumberFormatOptions,
 ) => (value == null ? "--" : new Intl.NumberFormat("zh-TW", options).format(value));
 
-export default function PerformanceCards({ stats }: { stats: Stats | null }) {
-  const cards = [
+function buildCards(stats: Stats | null) {
+  return [
     {
       label: "追蹤預測",
       value: formatNumber(stats?.total),
@@ -42,9 +54,45 @@ export default function PerformanceCards({ stats }: { stats: Stats | null }) {
       detail: "相對市場的平均表現",
     },
   ];
+}
+
+export default function PerformanceCards({
+  stats,
+}: {
+  stats: StatsByMarket | null;
+}) {
+  // 台股與加密貨幣的績效分開計算,依所選市場顯示對應統計
+  const [market, setMarket] = useState<MarketKey>("all");
+  const active = stats?.[market] ?? null;
+  const cards = buildCards(active);
 
   return (
     <section className="space-y-3" aria-label="績效摘要">
+      <div
+        className="flex flex-wrap gap-2 rounded-[8px] border border-white/10 bg-black/20 p-2"
+        role="tablist"
+        aria-label="績效市場分類"
+      >
+        {MARKET_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={market === tab.id}
+            onClick={() => setMarket(tab.id)}
+            className={`min-h-9 rounded-[6px] border px-3 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-slate-950 ${
+              market === tab.id
+                ? "border-cyan-300/40 bg-cyan-300/15 text-cyan-100"
+                : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.045] hover:text-slate-100"
+            }`}
+          >
+            {tab.label}
+            <span className="ml-2 font-mono text-xs text-slate-500">
+              {formatNumber(stats?.[tab.id]?.total)}
+            </span>
+          </button>
+        ))}
+      </div>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map((card, index) => (
           <div
@@ -64,9 +112,9 @@ export default function PerformanceCards({ stats }: { stats: Stats | null }) {
           </div>
         ))}
       </div>
-      {stats?.sample_warning && (
+      {active?.sample_warning && (
         <p className="rounded-[8px] border border-amber-300/20 bg-amber-300/10 px-3 py-2 text-xs text-amber-100">
-          樣本提醒：{stats.sample_warning}
+          樣本提醒：{active.sample_warning}
         </p>
       )}
     </section>
