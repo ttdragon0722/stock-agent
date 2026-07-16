@@ -49,6 +49,18 @@ class TestValidate:
         rec["thesis_summary"] = "rejected at light-scoring stage: weak volume"
         assert lp.validate_prediction(rec) == []
 
+    def test_q6_daily_accepted_without_plan(self):
+        rec = valid_q1()
+        del rec["entry_zone"], rec["stop_loss"], rec["take_profit"]
+        rec["question_type"] = "Q6_daily"
+        rec["horizon_days"] = 30
+        assert lp.validate_prediction(rec) == []
+
+    def test_q6_daily_with_plan_still_validated(self):
+        rec = {**valid_q1(), "question_type": "Q6_daily", "stop_loss": 250}
+        assert any("ordering violated" in e
+                   for e in lp.validate_prediction(rec))
+
     def test_q1_requires_trade_plan(self):
         rec = valid_q1()
         del rec["entry_zone"], rec["stop_loss"], rec["take_profit"]

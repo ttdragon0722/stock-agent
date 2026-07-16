@@ -39,7 +39,7 @@ python verify_predictions.py --fetch
 1. **`data/predictions.jsonl` 是 append-only**:只能經 `log_prediction.py` 追加,
    禁止任何事後修改或重寫歷史;`outcomes.jsonl` 是衍生檔,每次驗證重建。
 2. **報告唯一合法目錄是 `invest-advisor/data/reports/`**,命名
-   `<YYYY-MM-DD>_<主題>_<Q1..Q5|calibration>.md`。不得自創目錄或命名;
+   `<YYYY-MM-DD>_<主題>_<Q1..Q6|calibration>.md`。不得自創目錄或命名;
    `backup/` 只是快照,不是輸出目標。
 3. **技術指標只能由 `compute_ta.py` 產生**,禁止目測/心算;新聞快取只能經
    `cache_news.py` 讀寫,禁止手寫 SQL 動 `news_cache.db`。
@@ -54,9 +54,13 @@ python verify_predictions.py --fetch
 
 ## Skill 行為約定(回答投資問題時)
 
-- 任何投資決策問題都必須觸發 `invest-advisor` skill,依 `SKILL.md` 走完
-  Step 1–6,不可跳步(歷史回顧、多空對辯、參考資料來源清單、預測日誌皆為必要)。
-- 缺「參考資料來源」一節的報告視為未完成:禁止存檔、禁止記錄預測。
+- 任何投資相關問題都必須觸發 `invest-advisor` skill,先依 `SKILL.md`
+  Step 0 判斷模式:**決策問題**走完 Step 1–6 不可跳步(歷史回顧、多空對辯、
+  參考資料來源清單、預測日誌皆為必要);**純提問**走 Q0 快問模式
+  (按需跑腳本取數+轉述過往決策,不產報告不記預測,禁止給新評分或新建議;
+  模糊時預設 Q0)。
+- 缺「白話摘要」「參考資料來源」或「掛單表」任一節的報告視為未完成:
+  禁止存檔、禁止記錄預測。
 - 所有輸出附非投資建議聲明;信心不足時誠實調降信心指數。
 
 ## 前端注意事項

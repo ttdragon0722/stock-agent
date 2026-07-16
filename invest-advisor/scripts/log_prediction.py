@@ -19,8 +19,12 @@ ASSET_TYPES = {"stock", "crypto"}
 # Q3_screened_out: counterfactual record for names REJECTED by the Q3 funnel —
 # verified like any prediction but excluded from headline accuracy stats,
 # so the funnel's picked-vs-rejected edge can be measured.
+# Q6_daily: daily-report follow-up — logged ONLY when the view changes
+# (direction flip / levels moved >= 1 ATR / prior prediction resolved);
+# an unchanged view re-uses the prior record instead of adding a new one,
+# so the log is not inflated by one-entry-per-day duplicates.
 QUESTION_TYPES = {"Q1_short_entry", "Q2_long_hold", "Q3_screener",
-                  "Q3_screened_out", "Q4_levels", "Q5_allocation"}
+                  "Q3_screened_out", "Q4_levels", "Q5_allocation", "Q6_daily"}
 DIRECTIONS = {"long", "short", "neutral"}
 MIN_RR = 1.5
 

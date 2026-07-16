@@ -102,6 +102,8 @@ python scripts/verify_predictions.py --fetch
 
 | 你可以這樣說 | skill 會做什麼 |
 |------|------|
+| 「3030 支撐在哪?」「外資最近買 0050 嗎?」「上次為什麼叫我等?」 | **Q0 快問**:依問題按需跑對應腳本(compute_ta / fetch_chips / recall_history…)取新鮮數據,結合過往決策直接回答——不產報告、不記預測;追問到「能不能買」才升級完整流程 |
+| 「分析今天的 0050」「今日日報」 | Q6 日報:先驗證前次決策(`verify_predictions.py --fetch` 收盤級判定 + 現價對照掛單/SL/TP/失效條件),再更新今日點位;未指名標的 → `watchlist.py` 列出關注清單逐檔跑 |
 | 「驗證一下之前的推薦」「對個答案」「上次推的表現如何?」 | 執行 `verify_predictions.py --fetch`(自動更新 K 線 → 判定 WIN/LOSS),並用白話解讀每筆結果與整體勝率 |
 | 「開 dashboard」「我要看預測總覽」「有哪些預測到期了?」 | 啟動 Web Dashboard(`dashboard\start.ps1`)並開啟 http://localhost:3000;Node 環境不可用時退回靜態版 `dashboard.py` |
 | 「看我的預測紀錄」 | 讀取 `data/predictions.jsonl`,整理成表格摘要 |
@@ -173,6 +175,10 @@ python calibration_report.py
 
 # 清理過期快取(新聞 24h、標的檔案 30d;絕不動 K 線與預測日誌)
 python cache_gc.py            # 加 --dry-run 只看不刪
+
+# Q6 日報的關注清單:仍有未到期預測的標的 + 每筆的驗證狀態
+python watchlist.py                       # 全部
+python watchlist.py --analyzed-within 14  # 只列近 14 天分析過的(總覽日報預設)
 ```
 
 判定規則刻意保守:先觸止損判 LOSS、同一根 K 棒同時碰到止損與止盈也判 LOSS、價格從未進入進場區間判 NOT_FILLED(不計入勝率)、到期未平倉以期末價入帳(不丟棄,防倖存者偏差)。
@@ -210,13 +216,13 @@ invest-advisor/
 ├── SKILL.md                    # 觸發條件 + 主流程(skill 本體)
 ├── README.md                   # 本文件
 ├── references/                 # 細則(依 Progressive Disclosure 按需載入)
-│   ├── question-types.md       #   五類問題的個別流程
+│   ├── question-types.md       #   六類問題的個別流程(含 Q6 日報)
 │   ├── scoring-rubric.md       #   評分錨點、權重、信心規則(rubric v1.1.0)
 │   ├── ta-checklist.md         #   compute_ta 輸出判讀、多時框合成
 │   ├── crypto-specific.md      #   鏈上、資金費率、BTC 主導率
 │   ├── report-templates.md     #   各題型輸出模板 + prediction-meta 規格
 │   └── data-sources.md         #   來源優先序、TTL、降級路徑
-├── scripts/                    # 七個零依賴 Python 腳本(含 dashboard.py,見上)
+├── scripts/                    # 零依賴 Python 腳本(fetch/compute/log/verify/watchlist…,見上)
 ├── data/
 │   ├── market.db               # SQLite:OHLCV / 基本面 / 標的檔案
 │   ├── news_cache.db           # 新聞摘要快取(24h TTL)
@@ -224,7 +230,7 @@ invest-advisor/
 │   ├── outcomes.jsonl          # 判定結果(衍生檔,每次驗證重建)
 │   ├── events.json             # 重要事件 + 關鍵日期(log_events.py 維護,dashboard 圖形化)
 │   ├── dashboard.html          # 靜態版 view 產物(非報告)
-│   └── reports/                # 唯一報告目錄:<日期>_<主題>_<Q1..Q5|calibration>.md
+│   └── reports/                # 唯一報告目錄:<日期>_<主題>_<Q1..Q6|calibration>.md
 ├── assets/report-template.md   # 報告骨架
 ├── evals/eval-cases.md         # 10 個評測案例
 └── tests/                      # pytest 測試套件
