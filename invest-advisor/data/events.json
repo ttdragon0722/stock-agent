@@ -1,7 +1,189 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-07-16T12:16:27Z",
+  "updated_at": "2026-07-22T05:17:58Z",
   "important_events": [
+    {
+      "symbol": "^TWII",
+      "date": "2026-07-21",
+      "title": "台股+1,783.17點(+4.20%)收44,232.87 創史上單日最大漲點",
+      "description": "成交值8,356.24億元,收復5日線與季線;三大法人買超164.07億元,投信買超172.32億元連20買,外資賣超43.31億元連13賣。四檔追蹤標的宏觀面分數由7/20的32上修至44",
+      "category": "macro",
+      "impact": "bullish",
+      "source_url": "https://udn.com/news/story/7251/9641633",
+      "id": "d4d39fc18afa",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-21",
+      "title": "MOPS查證:無新增公告,最新仍為6月營收YoY +0.43%",
+      "description": "fetch_mops查詢於2026-07-21T15:43:32Z;6月營收763,581千元、MoM -28.69%、YoY +0.43%、累計YoY +24.77%;單月YoY自30%(4月)→14.75%(5月)→0.43%(6月)持續減速",
+      "category": "revenue",
+      "impact": "bearish",
+      "source_url": "https://mops.twse.com.tw/",
+      "id": "ce550c85cddb",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "^TWII",
+      "date": "2026-07-21",
+      "title": "量縮反彈爭議:成交值較7/17萎縮31%",
+      "description": "8,356億 vs 7/17的1兆2,129億;四檔vol_ratio全部<0.7(0050 0.68、3030 0.47、00918 0.42、009816 0.68),所有轉多失效條件皆綁定vol_ratio>1.2,今日全數未達成",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://udn.com/news/story/12806/9641176",
+      "id": "8d8e721798ec",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
+      "title": "0050除息0.6元當日完成填息 收102.50(+3.33%)",
+      "description": "7/17訂下的98.4第1批於7/20成交,今日浮盈+4.2%;prediction 2026-07-17-0050.TW-q6 excess return +1.80%。但收盤仍卡在R1 102.80之下且vol_ratio 0.68,7/20訂的轉多條件(放量收上102.2)只達成價格未達成量能,判定不轉多",
+      "category": "dividend",
+      "impact": "bullish",
+      "source_url": "https://udn.com/news/story/7239/9640863",
+      "id": "863f38c97a53",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "2330.TW",
+      "date": "2026-07-21",
+      "title": "大摩上調台積電目標價至NT$2,988 雲端業者上修AI資本支出",
+      "description": "台積電收2,410元(+90元/+3.88%);反駁7/17的AI估值破滅敘事,為0050與009816(台積電權重42.2%)的基本面錨",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://finance.biggo.com/news/25b4053f-ff9d-4f8b-bcb6-32c829fbb620",
+      "id": "780379f36e16",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-21",
+      "title": "德律281.5生死線收盤級守住 轉空計畫取消",
+      "description": "7/20盤中低270.5曾破兩層支撐但收283.0,7/21收291.5;外資7/21轉買+67,175股。惟+3.00%連二日落後大盤(+4.20%),vol_ratio 0.47為四檔最低,日內高292未觸R1 293",
+      "category": "technical",
+      "impact": "neutral",
+      "source_url": "https://www.cnyes.com/twstock/3030",
+      "id": "5f79352d336f",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
+      "title": "台股史上最大單日漲點 +1,783點(+4.20%)",
+      "description": "加權收44,232;台積電+3.88%收2,410重返季線;三大法人買超164.07億。0050站回SMA50 102.8，前次偏空失效條件觸發",
+      "category": "macro",
+      "impact": "bullish",
+      "source_url": "https://udn.com/news/story/7251/9641633",
+      "id": "5e20328880ed",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
+      "title": "外資連13賣、累計6,522億;投信連20買獨撐",
+      "description": "反彈由投信撐盤、外資持續提款，結構脆弱",
+      "category": "chips",
+      "impact": "bearish",
+      "source_url": "https://www.ctee.com.tw/news/20260718700150-439901",
+      "id": "16bc88457b8b",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-20",
+      "title": "281.5 生死線盤中失守,相對大盤獨弱",
+      "description": "盤中低 270.5,281.5 與 272.5 兩層支撐皆曾失守,現回 278.5;-3.3% vs 大盤 -0.5%,量縮(vol_ratio 0.68)、無個股利空;收盤級判決待確認,收破即轉空",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://www.cnyes.com/twstock/3030",
+      "id": "93bf96c66c79",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-20",
+      "title": "大摩挺台積電「回檔就買進」,法人歸因崩跌為系統性去槓桿",
+      "description": "機構態度轉向承接:大摩維持台積電正面看法;台指期上週五夜盤反彈 877 點;法人稱回測季線常為分批布局點",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://www.ctee.com.tw/news/20260720700056-439901",
+      "id": "7d8fb4a07969",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-20",
+      "title": "台股開高走低震盪逾千點,0050 盤中觸及 98.4 掛單價",
+      "description": "^TWII 早盤 +413 至 43,084 後翻黑最深 -703 至 41,967;0050 低 98.3 觸及第 1 批掛單價 98.4(視同成交),97.6 未觸;^TWII 盤中破 42,006 後收回,收盤級失效未觸發",
+      "category": "technical",
+      "impact": "neutral",
+      "source_url": "https://tw.news.yahoo.com/台股盤中漲逾400點後翻黑跌逾700點-010414370.html",
+      "id": "15738ad0edf2",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "009816.TW",
+      "date": "2026-07-17",
+      "title": "009816失效條件三重觸發 前兩筆預測計畫全數作廢",
+      "description": "7/17收14.28跌破14.80停損線與14.98,^TWII收破44,454;2026-07-16-009816.TW-q5帳面-3.47%,7/21重建觀點記新預測。7/21收14.76仍低於SMA50 14.959/EMA20 15.08/SMA20 15.28完整空頭排列",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://udn.com/news/story/7251/9634167",
+      "id": "72f32192a23f",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "00918.TW",
+      "date": "2026-07-17",
+      "title": "00918失效條件雙重觸發 7/15的long 61計畫作廢",
+      "description": "7/17收31.01跌破31.1失效線,^TWII同日收42,671跌破44,454;2026-07-15-00918.TW-q4依紀律應於當日撤單,7/21重建觀點記新預測2026-07-21-00918.TW-q6",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://udn.com/news/story/7251/9634167",
+      "id": "6ec2b6f35b02",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
     {
       "symbol": "3030.TW",
       "date": "2026-07-16",
@@ -322,6 +504,20 @@
     {
       "symbol": "3030.TW",
       "date": "2026-07-10",
+      "title": "6月營收YoY+0.43%，連三月減速",
+      "description": "30%→14.75%→0.43%;高PE(26x)失去成長支撐，為方向決勝的基本面隱憂",
+      "category": "revenue",
+      "impact": "bearish",
+      "source_url": "https://mops.twse.com.tw/",
+      "id": "b1fa1e18ce14",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_3030-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-07-10",
       "title": "6 月營收 YoY 僅 +0.43%,連三月減速",
       "description": "30% → 14.75% → 0.43%;上次報告失效條件「連兩月 <10%」第一隻腳落地,回踩買進計畫暫停",
       "category": "revenue",
@@ -440,6 +636,19 @@
       "logged_at": "2026-07-15T04:55:45Z",
       "reports": [
         "2026-07-15_009824-TW_Q2.md"
+      ]
+    },
+    {
+      "symbol": "009824.TW",
+      "date": "2026-06-25",
+      "title": "群益美國科技巨頭ETF掛牌(追蹤Solactive指數)",
+      "description": "掛牌僅18交易日、OHLCV<60根無法算TA、經理費0.8%偏貴、追蹤品質未驗證",
+      "category": "corporate",
+      "impact": "neutral",
+      "id": "db71d8d67ca6",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_009824-TW_Q6.md"
       ]
     }
   ],
@@ -564,6 +773,19 @@
       ]
     },
     {
+      "symbol": "3030.TW",
+      "date": "2026-07-20",
+      "label": "今日收盤 281.5 生死線正式判決(收破轉空,下看 264/243)",
+      "date_type": "other",
+      "status": "confirmed",
+      "note": "13:30 收盤;收回則續等 7 月營收",
+      "id": "2049f35c71a8",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
       "symbol": "0050.TW",
       "date": "2026-07-20",
       "label": "參與 0050 除息(0.6 元)最後買進日",
@@ -618,6 +840,19 @@
     {
       "symbol": "0050.TW",
       "date": "2026-07-21",
+      "label": "0050 除息 0.6 元(7/20 最後買進日;未成交委託自動失效需重掛 97.8/97.0)",
+      "date_type": "ex_dividend",
+      "status": "confirmed",
+      "note": "除息參考價 -0.6,勿誤判為下跌;不得為領息追價",
+      "id": "3d407372c591",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-07-21",
       "label": "0050 除息 0.6 元(最後買進日 7/20)",
       "date_type": "ex_dividend",
       "status": "confirmed",
@@ -643,6 +878,19 @@
     },
     {
       "symbol": "^TWII",
+      "date": "2026-07-22",
+      "label": "週選擇權結算 分析師預期結算後外資賣壓收斂或轉買",
+      "date_type": "option_expiry",
+      "status": "estimated",
+      "note": "外資現貨連13賣但期貨空單已減,套利交易近尾聲;結算後表態為0050情境樹主情境的觀察點",
+      "id": "afba56e146f0",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "^TWII",
       "date": "2026-07-29",
       "label": "Fed 7 月利率決策(FOMC)",
       "date_type": "fed_meeting",
@@ -652,6 +900,32 @@
       "logged_at": "2026-07-13T08:23:10Z",
       "reports": [
         "2026-07-13_009816-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "00918.TW",
+      "date": "2026-08-08",
+      "label": "00918 prediction 2026-07-09-00918.TW-q1 觀察期限(OPEN持倉)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "已成交150股@31.4,現價31.82(+1.34%,excess +2.34%);SL 30.40 / TP1 32.54",
+      "id": "b0eb059713d5",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "7月營收公告截止(基本面證偽觀察點;YoY<10%題材證偽、≥15%且外資翻買升評)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "8/10前公告",
+      "id": "069f0d9d33f4",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_3030-TW_Q6.md"
       ]
     },
     {
@@ -665,6 +939,18 @@
       "logged_at": "2026-07-13T06:16:01Z",
       "reports": [
         "2026-07-13_0050-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-10",
+      "label": "0050 本期配息 0.6 元發放日",
+      "date_type": "dividend_pay",
+      "status": "confirmed",
+      "id": "2b7bc3c3bd97",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
       ]
     },
     {
@@ -706,6 +992,19 @@
       ]
     },
     {
+      "symbol": "0050.TW",
+      "date": "2026-08-10",
+      "label": "0050配息0.6元發放入帳",
+      "date_type": "dividend_pay",
+      "status": "confirmed",
+      "note": "7/21除息當日完成填息;參與配息最後買進日7/20已過",
+      "id": "75f292e8010c",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
       "symbol": "2485.TW",
       "date": "2026-08-10",
       "label": "7 月營收公告截止 — 基本面論點觀察點",
@@ -732,6 +1031,19 @@
       ]
     },
     {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "德律7月營收公告截止(基本面二元證偽點)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "YoY >= 15% 且外資延續買超則減速擔憂證偽轉多;< 10% 則成長題材證偽。公告前不建立新倉位",
+      "id": "a2b7e8743a9b",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
       "symbol": "0050.TW",
       "date": "2026-08-10",
       "label": "0050 股息發放日",
@@ -755,6 +1067,19 @@
       "logged_at": "2026-07-13T06:03:02Z",
       "reports": [
         "2026-07-13_3030-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "7 月營收公告截止(YoY ≥15% 證偽減速;<10% 戴維斯雙殺風險)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "公告前不建立新倉位",
+      "id": "fa97466a00c3",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
       ]
     },
     {
@@ -810,6 +1135,19 @@
       ]
     },
     {
+      "symbol": "3030.TW",
+      "date": "2026-08-14",
+      "label": "德律 prediction 2026-07-15-3030.TW-q4 觀察期限",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "沿用計時中,失效條件:收破281.5轉空 / 放量收上302轉多",
+      "id": "28358cddd32b",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
       "symbol": "0050.TW",
       "date": "2026-08-14",
       "label": "Q4 點位分析 horizon 到期(三標的共同,30天)",
@@ -832,6 +1170,81 @@
       "logged_at": "2026-07-16T04:30:26Z",
       "reports": [
         "2026-07-16_3030-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-14",
+      "label": "2026-07-15-3030.TW-q4 觀察期屆滿",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "id": "fa7b7beec6a4",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-16",
+      "label": "0050 prediction 2026-07-17-0050.TW-q6 觀察期限",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "沿用計時中,失效條件:收破97.60 或 ^TWII收破42,408.66",
+      "id": "b866bd718f2b",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-16",
+      "label": "2026-07-17-0050.TW-q6 觀察期屆滿(失效條件:收破 97.0 除息調整後/^TWII 收破 42,006)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "id": "d30f0c710669",
+      "logged_at": "2026-07-20T04:19:43Z",
+      "reports": [
+        "2026-07-20_0050-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "009816.TW",
+      "date": "2026-08-20",
+      "label": "009816 prediction 2026-07-21-009816.TW-q6 觀察期限",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "neutral 51,掛14.22試單(R:R 2.05),失效:收破13.85",
+      "id": "45dd84e2d239",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "00918.TW",
+      "date": "2026-08-20",
+      "label": "00918 prediction 2026-07-21-00918.TW-q6 觀察期限",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "long 61,掛31.10(R:R 1.71),SL 30.40,TP 32.30/32.66",
+      "id": "668757a5ef36",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2026-08-21",
+      "label": "0050 Q6 neutral53 horizon 到期",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "id": "ebdb8141d1ba",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_0050-TW_Q6.md"
       ]
     },
     {
@@ -887,6 +1300,19 @@
     {
       "symbol": "009824.TW",
       "date": "2026-10-15",
+      "label": "追蹤品質/折溢價檢視(升評關鍵)",
+      "date_type": "other",
+      "status": "estimated",
+      "note": "掛牌滿約4月、資料足以計算TA後重評",
+      "id": "2e5fb8cf8f38",
+      "logged_at": "2026-07-22T05:17:58Z",
+      "reports": [
+        "2026-07-22_009824-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "009824.TW",
+      "date": "2026-10-15",
       "label": "掛牌滿一季檢視點:追蹤誤差/規模成長/折溢價紀錄",
       "date_type": "other",
       "status": "estimated",
@@ -908,6 +1334,19 @@
       "logged_at": "2026-07-15T04:55:45Z",
       "reports": [
         "2026-07-15_009824-TW_Q2.md"
+      ]
+    },
+    {
+      "symbol": "0050.TW",
+      "date": "2027-01-15",
+      "label": "0050下次除息(預估)",
+      "date_type": "ex_dividend",
+      "status": "estimated",
+      "note": "依半年配(1月/7月)規律推估,實際日期以投信官方公告為準",
+      "id": "e9d725f2df22",
+      "logged_at": "2026-07-21T15:55:51Z",
+      "reports": [
+        "2026-07-21_daily-summary_Q6.md"
       ]
     }
   ]
