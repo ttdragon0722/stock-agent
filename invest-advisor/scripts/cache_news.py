@@ -5,7 +5,8 @@ SQL. Duplicate (symbol, headline) pairs still fresh in cache are skipped.
 
 Usage:
   python cache_news.py --save items.json [--ttl-hours 24]
-  python cache_news.py --recall 2330.TW
+  python cache_news.py --recall 2330.TW [--with-proxies]
+  python cache_news.py --stats [--symbol 2330.TW] [--include-expired]
 
 items.json is a JSON array of:
   {"symbol": "...", "headline": "...", "summary": "...",
@@ -21,6 +22,8 @@ import sys
 from pathlib import Path
 
 import common
+import etf_proxies
+import source_audit
 
 VALID_SENTIMENTS = ("positive", "negative", "neutral", "mixed")
 DEFAULT_TTL_HOURS = 24
@@ -123,6 +126,54 @@ def recall_items(con: sqlite3.Connection, symbol: str, now: int) -> list[dict]:
     ]
 
 
+def recall_with_proxies(con: sqlite3.Connection, symbol: str,
+                        now: int) -> dict:
+    """ETF 的 recall:自身新聞 + 代理標的新聞(見 etf_proxies.py)。
+
+    ETF 查不到個股新聞是常態,代理標的的消息面才是可歸因的證據;
+    兩者分開回傳,報告須標明哪些論據來自代理標的。
+    """
+    sym = etf_proxies.normalize(symbol)
+    proxies = etf_proxies.proxies_for(sym)
+    return {
+        "symbol": sym,
+        "is_etf": etf_proxies.is_etf(sym),
+        "items": recall_items(con, sym, now),
+        "proxy_symbols": proxies,
+        "proxy_items": {p: recall_items(con, p, now) for p in proxies},
+    }
+
+
+def all_items(con: sqlite3.Connection, now: int, symbol: str | None = None,
+              include_expired: bool = False) -> list[dict]:
+    """Rows for source-diversity auditing (symbol/source_url/fetched_at)."""
+    where, params = [], []
+    if symbol:
+        where.append("symbol = ?")
+        params.append(symbol.strip().upper())
+    if not include_expired:
+        where.append("expires_at > ?")
+        params.append(now)
+    clause = (" WHERE " + " AND ".join(where)) if where else ""
+    rows = con.execute(
+        "SELECT symbol, headline, sentiment, source_url, fetched_at "
+        f"FROM news_items{clause} ORDER BY fetched_at DESC", params).fetchall()
+    return [{"symbol": r[0], "headline": r[1], "sentiment": r[2],
+             "source_url": r[3], "fetched_at": r[4]} for r in rows]
+
+
+def stats(con: sqlite3.Connection, now: int, symbol: str | None = None,
+          include_expired: bool = False,
+          since_hours: int = source_audit.DEFAULT_SINCE_HOURS) -> dict:
+    """Source-diversity report for the cached news (see source_audit.py)."""
+    items = all_items(con, now, symbol, include_expired)
+    report = source_audit.audit(items, now, since_hours)
+    report["scope"] = {"symbol": symbol.strip().upper() if symbol else None,
+                       "include_expired": include_expired,
+                       "as_of": common.iso_utc(now)}
+    return report
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -130,6 +181,17 @@ def main() -> int:
                       help="path to a JSON array of news items to insert")
     mode.add_argument("--recall", metavar="SYMBOL",
                       help="print fresh cached items for a symbol")
+    mode.add_argument("--stats", action="store_true",
+                      help="source-diversity audit of the cache")
+    parser.add_argument("--with-proxies", action="store_true",
+                        help="--recall also returns ETF proxy symbols' news")
+    parser.add_argument("--symbol", default=None,
+                        help="restrict --stats to one symbol")
+    parser.add_argument("--include-expired", action="store_true",
+                        help="--stats over the whole DB, not just fresh rows")
+    parser.add_argument("--since-hours", type=int,
+                        default=source_audit.DEFAULT_SINCE_HOURS,
+                        help="--stats window for recent_item_count")
     parser.add_argument("--ttl-hours", type=int, default=DEFAULT_TTL_HOURS)
     parser.add_argument("--news-db", default=None)
     args = parser.parse_args()
@@ -145,6 +207,15 @@ def main() -> int:
             inserted = save_items(con, items, now, args.ttl_hours)
             common.print_json({"saved": inserted,
                                "skipped_duplicates": len(items) - inserted})
+        elif args.stats:
+            common.print_json(stats(con, now, args.symbol,
+                                    args.include_expired, args.since_hours))
+        elif args.with_proxies:
+            result = recall_with_proxies(con, args.recall, now)
+            result["fresh_count"] = len(result["items"])
+            result["proxy_fresh_count"] = sum(
+                len(v) for v in result["proxy_items"].values())
+            common.print_json(result)
         else:
             items = recall_items(con, args.recall, now)
             common.print_json({"symbol": args.recall.strip().upper(),

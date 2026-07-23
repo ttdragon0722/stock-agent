@@ -157,6 +157,22 @@ python compute_ta.py --symbol BTCUSDT --timeframe 4h
 - 股票**沒有** 4h(免費來源無可靠盤中歷史);加密貨幣符號自動轉 USDT 交易對(`BTC` → `BTCUSDT`)。
 - compute_ta 輸出:趨勢分類、SMA20/50/200、RSI14、MACD、ATR14、量能比、52 週高低、最近三個支撐/壓力位。資料過時(stale_bars > 3)會警告。
 
+### 新聞快取與來源多樣性
+
+```bash
+# 讀取未過期的新聞摘要;ETF 加 --with-proxies 一併帶出代理標的(成分股+指數)的新聞
+python cache_news.py --recall 0050.TW --with-proxies
+
+# 來源多樣性稽核:把「幾則新聞」換算成「幾個獨立來源」
+python cache_news.py --stats                      # 全庫(未過期)
+python cache_news.py --stats --symbol 3030.TW     # 單一標的
+python cache_news.py --stats --include-expired    # 含過期,看歷史來源結構
+```
+
+- `--stats` 以註冊網域去重,同集團網域(工商時報↔中時、經濟日報↔udn、Yahoo 各頻道)併為一個來源,避免「同一則通稿被三家轉載」被當成三個來源。
+- 輸出的 `flags` 直接對應 rubric §IV 扣分:`weak_source_count`(獨立來源 < 3)→ −10;`single_domain_dominant`(單一網域 > 60%)→ −5;`no_foreign_source` / `no_primary_source` 為提示不扣分。`confidence_penalty` 是建議總扣分。
+- ETF 代理對照表在 `scripts/etf_proxies.py`;新增 ETF 時同步更新 `references/data-sources.md` §3.1。
+
 ### 驗證框架(檢討這套系統的績效)
 
 ```bash
@@ -217,7 +233,7 @@ invest-advisor/
 ├── README.md                   # 本文件
 ├── references/                 # 細則(依 Progressive Disclosure 按需載入)
 │   ├── question-types.md       #   六類問題的個別流程(含 Q6 日報)
-│   ├── scoring-rubric.md       #   評分錨點、權重、信心規則(rubric v1.1.0)
+│   ├── scoring-rubric.md       #   評分錨點、權重、信心規則(rubric v1.3.0)
 │   ├── ta-checklist.md         #   compute_ta 輸出判讀、多時框合成
 │   ├── crypto-specific.md      #   鏈上、資金費率、BTC 主導率
 │   ├── report-templates.md     #   各題型輸出模板 + prediction-meta 規格

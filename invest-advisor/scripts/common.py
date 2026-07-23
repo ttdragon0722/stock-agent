@@ -26,7 +26,7 @@ PREDICTIONS_FILE = DATA_DIR / "predictions.jsonl"
 OUTCOMES_FILE = DATA_DIR / "outcomes.jsonl"
 EVENTS_FILE = DATA_DIR / "events.json"
 
-RUBRIC_VERSION = "1.2.0"
+RUBRIC_VERSION = "1.3.0"
 
 # Benchmarks used for excess-return comparison (see references/scoring-rubric.md)
 BENCHMARK_BY_ASSET_TYPE = {"stock": "SPY", "crypto": "BTCUSDT"}

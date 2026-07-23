@@ -99,3 +99,57 @@ class TestSaveRecall:
         cn.save_items(con, [valid_item()], NOW, ttl_hours=24)
         item = cn.recall_items(con, "2330.TW", NOW)[0]
         assert item["published_at"] == common.iso_to_epoch("2026-07-09T08:00:00Z")
+
+
+class TestStats:
+    def _seed(self, con, urls, symbol="0050.TW", now=NOW):
+        items = [{**valid_item(), "symbol": symbol, "headline": f"h{i}",
+                  "source_url": u} for i, u in enumerate(urls)]
+        cn.save_items(con, items, now, ttl_hours=24)
+
+    def test_stats_counts_independent_domains(self, con):
+        self._seed(con, ["https://udn.com/1", "https://money.udn.com/2",
+                         "https://www.reuters.com/3"])
+        result = cn.stats(con, NOW)
+        assert result["item_count"] == 3
+        assert result["independent_sources"] == 2
+
+    def test_stats_excludes_expired_by_default(self, con):
+        self._seed(con, ["https://udn.com/1"], now=NOW - 48 * 3600)
+        self._seed(con, ["https://cnyes.com/2"], now=NOW)
+        assert cn.stats(con, NOW)["item_count"] == 1
+        assert cn.stats(con, NOW, include_expired=True)["item_count"] == 2
+
+    def test_stats_filters_by_symbol(self, con):
+        self._seed(con, ["https://udn.com/1"], symbol="0050.TW")
+        self._seed(con, ["https://cnyes.com/2", "https://reuters.com/3"],
+                   symbol="3030.TW")
+        result = cn.stats(con, NOW, symbol="3030.tw")
+        assert result["item_count"] == 2
+        assert result["scope"]["symbol"] == "3030.TW"
+
+    def test_stats_flags_weak_cache(self, con):
+        self._seed(con, ["https://udn.com/1"])
+        result = cn.stats(con, NOW)
+        assert "weak_source_count" in result["flags"]
+        assert result["confidence_penalty"] < 0
+
+    def test_recall_with_proxies_returns_component_news(self, con):
+        self._seed(con, ["https://udn.com/1"], symbol="0050.TW")
+        self._seed(con, ["https://reuters.com/2"], symbol="2330.TW")
+        result = cn.recall_with_proxies(con, "0050.TW", NOW)
+        assert result["is_etf"] is True
+        assert len(result["items"]) == 1
+        assert len(result["proxy_items"]["2330.TW"]) == 1
+
+    def test_recall_with_proxies_on_plain_stock(self, con):
+        self._seed(con, ["https://udn.com/1"], symbol="3030.TW")
+        result = cn.recall_with_proxies(con, "3030.TW", NOW)
+        assert result["is_etf"] is False
+        assert result["proxy_symbols"] == []
+        assert result["proxy_items"] == {}
+
+    def test_stats_empty_db(self, con):
+        result = cn.stats(con, NOW)
+        assert result["item_count"] == 0
+        assert result["by_symbol"] == {}

@@ -52,22 +52,67 @@
   (「{標的} 利空/風險/做空理由」),結果餵入 Step 3.5 空頭論點
 - **快取流程(強制,經 cache_news.py,禁止手寫 SQL)**:
   1. 搜尋前 `python cache_news.py --recall <symbol>` 取未過期摘要
+     (ETF 標的改用 `--recall <symbol> --with-proxies`,見 §3.1)
   2. 搜尋後把每則摘要(symbol/headline/summary/sentiment/source_url,
      sentiment 限 positive|negative|neutral|mixed)存成 JSON 陣列檔,
      `python cache_news.py --save <items.json>` 入庫(24h TTL,自動去重)
+  3. 存檔後跑 `python cache_news.py --stats --symbol <symbol>` 檢查來源
+     多樣性,`flags` 與 `confidence_penalty` 直接寫入報告(見 §4.1)
 
-## 4. 交叉驗證規則
+## 3.1 ETF 代理來源(強制,scripts/etf_proxies.py)
+
+ETF 沒有個股層級新聞,只搜到大盤通稿時,消息面等於沒有可歸因的證據。
+**分析 ETF 時必須一併蒐集代理標的(權重最大成分股 + 對應指數)的新聞**:
+
+| ETF 類型 | 代理標的 | 例 |
+|------|------|------|
+| 市值型(台灣 50/TOP50) | 台積電、鴻海 + ^TWII | 0050、009816、006208 |
+| 高股息型 | 主要成分金融/電子 + ^TWII | 0056、00918、00919、00878 |
+| 海外科技型 | NVDA、MSFT + SPY | 009824、00980A |
+
+- 對照表在 `scripts/etf_proxies.py` 的 `PROXY_MAP`,未收錄的台股 ETF
+  預設代理 `^TWII`;新增 ETF 時同步更新該表與本節
+- `python cache_news.py --recall 0050.TW --with-proxies` 會回傳
+  ETF 自身與各代理標的的快取新聞
+- 代理標的的新聞**計入獨立來源數**,但報告必須標明
+  「本論據來自代理標的 2330.TW,非 0050 本身」,不得偽裝成 ETF 的個股消息
+- ETF 專屬的一手來源(A 級):發行商官網月報/持股、TWSE 淨值與折溢價
+
+## 4. 交叉驗證規則(含獨立來源計數)
 
 - 關鍵數字(現價、財報數據、代幣解鎖量)至少 2 個獨立來源
 - 本地快取只計為一個來源;第二來源必須是當次現抓
 - 衝突處理:報告並列兩個數字與出處,採用較保守者計算交易計畫,
   並在信心指數扣分(rubric §IV)
 
+## 4.1 獨立來源計數(強制,cache_news.py --stats)
+
+「幾則新聞」不是資訊量,「幾個獨立來源」才是。同一則通稿被
+udn / ETtoday / 中時同時轉載,在快取裡是 3 列、在判斷上是 1 個來源。
+
+- 計數由 `python cache_news.py --stats [--symbol X]` 產出,**禁止目測**。
+  規則實作於 `scripts/source_audit.py`:以註冊網域去重,
+  同集團網域(ctee↔chinatimes、money.udn↔udn、Yahoo 各頻道)併為一個
+- 報告的「參考資料來源」節必須寫出 **獨立來源 N 個(去重後)**,
+  而不是只列則數
+- `flags` 對應處置:
+
+| flag | 意義 | 處置 |
+|------|------|------|
+| `weak_source_count` | 獨立來源 < 3 | 信心 −10,報告明說資料稀缺(rubric §IV) |
+| `single_domain_dominant` | 單一網域 > 60% 且 ≥ 4 則 | 信心 −5,多空對辯須註明敘事可能單邊 |
+| `no_foreign_source` | 無外媒對照 | 權值股/國際標的必須補一次英文搜尋;補不到則在報告註明 |
+| `no_primary_source` | 快取內無一手來源 | 提示性質,不重複扣分(A 級數據另由 fetch_chips/fetch_mops 供應) |
+
+- `confidence_penalty` 是建議扣分(≤ 0),與 rubric §IV 其他條款相加後
+  一併計入信心指數,報告須寫出扣分明細
+
 ## 5. 抓取失敗的降級路徑
 
 1. fetch_ohlcv 失敗 → 重試一次 → 仍失敗則改用 WebSearch 找現價與
    近期高低點,技術面分數上限 59(無確定性指標),信心 −10 並註明
-2. 冷門標的搜尋結果 < 3 則 → 信心 −10,報告明說資料稀缺
+2. 冷門標的 `independent_sources` < 3(去重後,ETF 併計代理標的)
+   → 信心 −10,報告明說資料稀缺;僅則數多但來源集中同樣算稀缺
 3. Binance 無該交易對 → 嘗試其他計價對(BUSD 已退場,試 FDUSD/BTC 對)
    或改以 CoinGecko 頁面數據 + 上限 59 的技術面處理
 4. fetch_chips / fetch_mops 失敗 → 重試一次 → 仍失敗則台股分析照常進行,

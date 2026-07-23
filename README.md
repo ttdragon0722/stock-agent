@@ -58,7 +58,9 @@ invest-advisor/
 │   ├── compute_ta.py           #   確定性計算技術指標(禁止 LLM 目測心算)
 │   ├── fetch_chips.py          #   台股三大法人買賣超 + 融資券(TWSE/TPEx)
 │   ├── fetch_mops.py           #   MOPS 重大訊息 + 月營收(官方一手資料)
-│   ├── cache_news.py           #   新聞情緒摘要快取(24h TTL)
+│   ├── cache_news.py           #   新聞情緒摘要快取(24h TTL)+ 來源多樣性稽核 --stats
+│   ├── source_audit.py         #   把「幾則新聞」換算成「幾個獨立來源」(去重網域)
+│   ├── etf_proxies.py          #   ETF → 代理標的(權重成分股 + 指數)對照
 │   ├── recall_history.py       #   查同標的歷史預測與判定結果
 │   ├── log_prediction.py       #   寫入預測日誌(含格式斷言)
 │   ├── verify_predictions.py   #   到期判定 WIN/LOSS + 績效統計

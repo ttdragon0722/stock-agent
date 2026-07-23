@@ -114,11 +114,23 @@ python fetch_mops.py --symbol 2330.TW     # MOPS 重大訊息+月營收
 - **外媒對照**:權值股(台灣 50 成分等級)與國際高知名度標的,
   至少 1 次英文搜尋(Reuters/Bloomberg/WSJ 視角);外媒與本地媒體的
   溫差寫入 Step 3.5 多空對辯
+- **ETF 標的必抓代理標的新聞**(0050/009816/00918/009824 等):
+  ETF 沒有個股新聞,只引用大盤通稿等於消息面無證據。
+  `python cache_news.py --recall <symbol> --with-proxies` 取自身 +
+  代理標的(權重成分股 + 指數)快取,代理標的的新聞照樣要現抓補齊;
+  對照表見 `references/data-sources.md` §3.1,報告須標明論據來自代理標的
 - **新聞快取(讀寫都不可省略)**:搜尋前先
   `python cache_news.py --recall <symbol>` 取未過期摘要;搜尋完把本次新聞
   摘要整理成 JSON 陣列(每則含 symbol/headline/summary/sentiment/source_url)
   寫入暫存檔後執行 `python cache_news.py --save <items.json>`,
   讓下次分析與情緒軌跡比對有據可查
+- **來源多樣性稽核(存檔後強制,禁止目測)**:
+  `python cache_news.py --stats --symbol <symbol>` 取得
+  `independent_sources`(去重網域)、`flags`、`confidence_penalty`;
+  `weak_source_count`(< 3 個獨立來源)→ 先補搜尋,補不到才依
+  rubric §IV −10 並在報告明說;`single_domain_dominant` → −5 且多空對辯
+  註明敘事單邊;`no_foreign_source` 且為權值股/國際標的 → 補一次英文搜尋。
+  結果寫入報告「參考資料來源」節(細則見 data-sources.md §4.1)
 - 加密貨幣另讀 `references/crypto-specific.md`(資金費率、鏈上、恐懼貪婪)
 - 資料稀缺的冷門標的 → 信心指數必須調降並明說原因
 
