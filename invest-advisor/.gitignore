@@ -1,0 +1,7 @@
+# 真實持倉系統(portfolio.py)的資料屬個人隱私,永不進版控。
+# 程式碼(scripts/portfolio.py)與測試(tests/test_portfolio.py)照常追蹤,
+# 僅排除含真實金額/股數的資料檔與本機備份。
+data/portfolio.json
+data/portfolio.json.tmp
+data/portfolio.*.json
+data/portfolio.local.*
