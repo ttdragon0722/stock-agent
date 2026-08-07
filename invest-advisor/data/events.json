@@ -1,7 +1,162 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-08-06T16:16:49Z",
+  "updated_at": "2026-08-07T06:10:19Z",
   "important_events": [
+    {
+      "symbol": "2360.TW",
+      "date": "2026-08-07",
+      "title": "護城河量化:致茂避開Advantest(市占50%)與Teradyne(30%)正面競爭,毛利率61.5%營益率40%",
+      "description": "全球測試設備由愛德萬(約50%)與泰瑞達(約30%)合計佔八成,兩者業務核心在晶圓/晶片級數位類比訊號測試;致茂走跨界整合路線(半導體量測×高功率電力電子),數十年深耕電力電子測試從元件到模組到系統,資源布署於AI高功耗晶片系統級測試(SLT)與CoWoS等2.5D/3D先進封裝量測。護城河的證據不是市占率而是2025年毛利率61.5%與2026Q1營益率40%——在設備業長期維持此獲利結構即為不可替代性的量化證明。2025營收283.1億、稅後淨利YoY +122%、EPS 27.7元創高、配息19元。",
+      "category": "corporate",
+      "impact": "bullish",
+      "source_url": "https://vocus.cc/article/6872f93efd897800015014e9",
+      "id": "e8c053041fde",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-07",
+      "title": "產業結構變化:群聯主要競爭對手慧榮(SIMO)遭美商邁凌(MXL)收購,潘健成稱市占率一定提高",
+      "description": "NAND控制IC競爭格局的結構性變化。群聯執行長潘健成於法說表示此併購將使產業出現很大洗牌、群聯有絕對優勢、市占率一定會提高。併購通常帶來12-18個月的整合期與客戶流失風險,該整合期即群聯的搶單窗口,構成Q2長期論點(12個月)的核心支柱之一。估值面須注意群聯P/E約42倍高於慧榮30倍。",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://m.cnyes.com/news/id/4865759",
+      "id": "ddcf80e8e03e",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-07",
+      "title": "外媒實證:NAND供需失衡有明確時間下限2028年,需求年增18%而投片2026減5%",
+      "description": "英文外媒(TrendForce/NAND Research/Kingston)一手產業數據:全球NAND需求2026與2027各年增18%,供給端晶圓投片2026年減少5%、2027年僅增3%,產業重大新增產能要到2028年;三星與SK海力士/Solidigm轉向HBM與DRAM而縮減NAND投資;Kioxia/SanDisk投資年增41%至45億美元;美光CapEx年增63%但集中G9製程與企業級SSD。2026Q1合約價QoQ +55~60%,自2025年初已漲246%。此為Q2長期論點的物理基礎,非預期心理。",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://www.trendforce.com/presscenter/news/20251113-12780.html",
+      "id": "dd1e155ce0f2",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-07",
+      "title": "篩選發現:使用者持股3030德律與3413京鼎的流動性在18檔候選池中排倒數",
+      "description": "以近20日日均成交金額衡量,3030德律僅4.89億元(18檔中倒數第1)、3413京鼎11.74億元(倒數第5),而榜首國巨達338.65億元、環球晶120.76億元。德律atr_pct 5.79%亦低於使用者「振幅大」的6%門檻。依使用者自訂的篩選條件,其現有持股與剛出清的標的都不會入選。此為本次Q3報告對既有部位最直接的發現。",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": null,
+      "id": "db80b043a6e1",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-07",
+      "title": "使用者出清3030全部12股,實現報酬約+5.18%",
+      "description": "portfolio.py(2026-08-07T04:00:04Z)確認3030持股歸零(成本280.00,以現價294.50計約+5.18%)。投組由3檔縮為2檔,總市值14,425→10,891元;0050.TW權重49.84%→66.01%,3413.TW權重25.60%→33.99%(超過25%單一標的集中度警戒線)。方向判斷與掛單價不受影響,僅執行語境由「持倉+停損」轉為「空手+等待買單成交」。",
+      "category": "corporate",
+      "impact": "neutral",
+      "source_url": null,
+      "id": "cc95851527d7",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-07",
+      "title": "風險揭露:群聯Q1存貨大增至721.99億元並發行8億美元ECB,訂單履約率僅35%",
+      "description": "在NAND價格已上漲246%的位置上,公司為備料使Q1存貨大增至721.99億元,並發行8億美元ECB支應,顯示營運現金流不足以支撐備料、槓桿升高且未來有股本稀釋。公司稱存貨多數為已獲客戶保證出貨訂單,但保證出貨不等於保證價格,若NAND價格反轉將轉為跌價損失。另訂單履約率僅35%,連公司自己都交不出貨,使法人2026 EPS預估120-300元(離散度150%)全部建立在假設能交貨之上。管理層並主動示警NAND價格過熱將損害產業長期健康。",
+      "category": "earnings",
+      "impact": "bearish",
+      "source_url": "https://vocus.cc/article/6a03523ffd897800012addca",
+      "id": "bce35975abd3",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-08-07",
+      "title": "國巨收盤540元單日-5.26%,外資連3日大賣1855萬股而融資同期連增2226張",
+      "description": "TWSE MIS官方收盤540.00元、-30.00(-5.26%)、成交41,938張,自1220元以上腰斬累計-55.74%。fetch_chips官方A級:外資8/4 -5,992,640、8/5 -8,196,014、8/6 -4,366,559股連3日大賣合計約1855萬股;同期融資餘額32,136→34,362張(+2,226張、+6.9%),呈典型外資出貨、散戶以融資承接型態。技術面1d suggested 31與1w 37雙雙落入rubric偏空區間(20-39),股價同時在SMA20 633.375與SMA50 811.17之下;supports[0] 456.5距現價-15.5%,其下336.5之間存在約2×ATR的支撐真空帶。今日下跌但vol_ratio_20僅0.76未爆量,籌碼未洗清。",
+      "category": "chips",
+      "impact": "bearish",
+      "source_url": "https://www.twse.com.tw/",
+      "id": "9f8849de7bb8",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2026-08-07",
+      "title": "致茂訂單能見度3-5年為五檔最長,CPO測試設備取得訂單,6月營收YoY +73.02%累計+90.60%",
+      "description": "MOPS官方月營收(A級):6月營收4,114,136仟元、YoY +73.02%、累計YoY +90.60%。2026 Q1營收118.59億、毛利率63%、營益率40%;2025全年EPS 27.7元創高。三引擎:AI電源、系統級測試(前三大AI HPC客戶導入SLT)、矽光子CPO(已取得訂單,2026試產、2027量產,Insertion 3預期為最大量區),訂單能見度3-5年。野村買進、目標價2845元,預估2026-28獲利CAGR 39%。與使用者原持股3030德律直接同業,但日均成交額66.67億為德律4.89億的13.6倍。",
+      "category": "revenue",
+      "impact": "bullish",
+      "source_url": "https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=17582eb0-7be9-44d2-8bad-d0c4f20d7e0d",
+      "id": "9b425b81c40d",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "3324.TWO",
+      "date": "2026-08-07",
+      "title": "雙鴻支撐壓力全擠在0.75×ATR區間內,窮舉後最佳R:R僅0.78,依rubric §V禁止掛買單",
+      "description": "1d三個支撐(1000/990/977)與三個壓力(1010/1020/1025)全部擠在977-1025的48元區間內,僅0.75×ATR;窮舉所有「支撐進場×壓力停利」組合後最佳R:R僅0.78,遠低於1.5門檻,任何進場計畫的停利目標都太近。基本面本身不差(6月營收YoY +62.13%、累計+77.31%,前瞻PE 17.5倍五檔次低,液冷占比目標2026年達55%),且8/6三大法人合計買超1,890,663股、外資+1,537,569股為五檔單日最強法人買盤,但價格結構使其無法執行。另6月營收MoM -13.41%為五檔唯一月減。",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://readmo.cmoney.tw/article/4853b468-69e2-4a98-bd80-be949310da55",
+      "id": "8c42016a790a",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "3413.TW",
+      "date": "2026-08-07",
+      "title": "京鼎跳空開低跌破SMA200 310.07,放量下跌,停損線盤中觸發",
+      "description": "開317.00(跳空-0.94%)、高320.00(即在開盤附近)、低307.50、現309.00(-11.00,-3.44%);11:41成交1,598張已超越8/6全日1,502張,為放量下跌。現價與盤中低點均已跌破compute_ta 1d SMA200 310.0675,即2026-08-06報告設定的停損線(310.17);惟該條件明訂為日線收盤確認,13:30前未正式成立。股價同時跌破SMA20 329.55、SMA50 322.92、SMA200 310.07,呈空頭排列。型態與8/6留9元長下影的承接型完全相反。",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp",
+      "id": "72569977f4f2",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-07",
+      "title": "利多公告後量縮下跌:最高301.00未過302壓力,vol_ratio_20僅0.36",
+      "description": "盤中開298.00、高301.00(距1d resistances[0] 302.00僅1.00元=0.06×ATR未過)、低293.00(精準守住supports[0])、現294.50(-0.34%),量698張。7月營收與EPS雙利多公告後股價不漲反跌且量縮至均量三分之一,構成空方「利多出盡」論點的核心證據,亦為未給消息面80+分的理由。",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp",
+      "id": "6697b5d27d3b",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
     {
       "symbol": "00632R.TW",
       "date": "2026-08-07",
@@ -17,6 +172,105 @@
       ]
     },
     {
+      "symbol": "2360.TW",
+      "date": "2026-08-07",
+      "title": "估值警訊:致茂現價2030位於合理估值區間第93百分位,殖利率僅0.94%",
+      "description": "以券商2026 EPS 41.14元×成長股PE 40-50倍推導合理估值區間1646-2057元,現價2030元位於第93百分位已接近上緣,PEG 1.26略高於1;回顧PE 73.2倍(2025 EPS 27.7)、前瞻PE 49.3倍。現金股利19元對應殖利率僅0.94%,幾乎無股息保護,與使用者「套牢也不會沒價值」的需求不符(對照國巨2327殖利率4.07%)。對照組群聯8299現價位於其合理區間第37百分位,價格位置明顯較佳。另7/23報告曾記錄2026 EPS有42.06 vs 20.8的重大分歧尚未消除,若採20.8則前瞻PE達97.6倍。",
+      "category": "technical",
+      "impact": "bearish",
+      "source_url": "https://statementdog.com/analysis/2360",
+      "id": "594e4f4c5f6e",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "6488.TWO",
+      "date": "2026-08-07",
+      "title": "環球晶6月營收YoY -1.63%、累計-7.60%,為候選池唯一營收衰退者遭Q3漏斗淘汰",
+      "description": "MOPS官方月營收(A級):6月營收5,624,376仟元、MoM +16.16%、YoY -1.63%、累計YoY -7.60%。雖然日均成交額120.76億(候選池第2)與ATR% 11.29(第2)完全符合使用者「量大、振幅大」條件,但累計營收年減7.6%違反「基本面不錯、套牢也不會沒價值」的硬門檻,於Q3漏斗第2關淘汰。技術面1d suggested 39 vs 1w uptrend 84呈嚴重多時框分歧。",
+      "category": "revenue",
+      "impact": "bearish",
+      "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
+      "id": "57671493e81c",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "3413.TW",
+      "date": "2026-08-07",
+      "title": "AMAT官方Q3財測與2026設備業務+30%指引,反向推翻前次事件失效條件",
+      "description": "AMAT投資人關係官方資料:fiscal Q3財測營收89.5億美元±5億、non-GAAP EPS 3.36±0.20;CEO於Q2法說指引2026年半導體設備業務成長超過30%、封裝營收成長超過50%。前次報告設定的事件失效條件為「8/13 AMAT下修2026設備支出至+20%以下」,但官方現行指引為>30%,故該條件門檻須重述。消息面38→45。與台媒「AMAT 2026動能未展開」敘事形成明顯溫差。",
+      "category": "industry",
+      "impact": "bullish",
+      "source_url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-second-quarter-2026-results/",
+      "id": "3b8cb05bf1b2",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-07",
+      "title": "系統校準:Q3篩選漏斗實測edge為-7.364個百分點,7/23推薦致茂LOSS而淘汰的群聯反上漲",
+      "description": "verify_predictions.py的screener_funnel:入選21筆平均報酬-6.248%、淘汰13筆平均報酬+1.116%,edge -7.364個百分點。具體到本次候選:2026-07-23-2360.TW-q3以67分推薦致茂→LOSS(ret -7.75%、excess -12.03%);同日以35分淘汰群聯(Q3_screened_out short)→其後ret +6.02%、excess +1.74%;2026-07-23-6187.TWO-q3給萬潤neutral 63→ret +15.20%、excess +10.92%(偏保守)。全系統93筆勝率0.412、方向準確率0.344、平均超額報酬-4.581%。本次報告已據此在掛單紀律5要求部位減半,並於失效條件設立「流程層級」檢驗:14天後若淘汰組平均超額報酬再度高於入選組,應停用本流程並改寫rubric的Q3權重。",
+      "category": "other",
+      "impact": "bearish",
+      "source_url": null,
+      "id": "379269af6b77",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-07",
+      "title": "群聯6月營收YoY +301%、累計+243%為候選池最高,Q1單季EPS 68.80元毛利率61.3%",
+      "description": "MOPS官方月營收(A級):6月營收24,852,784仟元、MoM +8.87%、YoY +301.0%、累計YoY +243.08%,為18檔候選池最高。2026 Q1營收409.67億(YoY +196%)、單季EPS 68.80元、毛利率由前季41.7%升至61.3%;機轉為3月零組件報價單日漲50%、4月再漲20%,低毛利消費型模組占比壓至8%、AI生態系模組拉至38%。2025 EPS 41.98元對應回顧PE 47.4倍;法人2026預估120-150元對應前瞻PE 13-17倍,安全邊際為五檔最厚。經Q3篩選列為第1名。",
+      "category": "earnings",
+      "impact": "bullish",
+      "source_url": "https://www.bnext.com.tw/article/90889/phison-q1-2026",
+      "id": "20705f452a67",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-08-07",
+      "title": "國巨多空時間尺度分歧:外資喊目標價1490-1515元,但所有多方論據錨在2027-2028年",
+      "description": "摩根士丹利合理股價1515元、美系外資目標價自346元調升至1490元並給買進評等;美系外資預估通用型MLCC 2027年漲93%、2028年漲84%,帶動毛利率升至46%/51%;國巨自2026/7/1起全面調漲全系列電容產品;公開收購日本芝浦電子(每股6200日圓)預計Q3完成100%子公司化;擬派現金股利22元,以540元計殖利率4.07%為本輪標的唯一具實質股息保護者;6月營收YoY +38.91%、累計+29.35%(官方A級)在股價腰斬期間仍成長。惟所有多方論據的時間錨在2027-2028年(需18-30個月驗證),而空方證據全部發生於過去三個交易日並直接作用於價格,在Q4的30天horizon上空方明顯更強。",
+      "category": "policy",
+      "impact": "neutral",
+      "source_url": "https://wantrich.chinatimes.com/news/20260623900222-420101",
+      "id": "1e486bb4dd2b",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "2383.TW",
+      "date": "2026-08-07",
+      "title": "台光電6月營收YoY +120.69%,六大外資上調目標價至最高6000元,惟目標價離散度達83%",
+      "description": "MOPS官方月營收(A級):6月營收17,732,956仟元、MoM +13.54%、YoY +120.69%、累計YoY +81.82%。CCL/PCB 4月調漲10-40%、Q2再漲至少10%、法人指下半年續漲,產能全產全銷、能見度直達2028年。高盛上調目標價至6000元,大和5234、元大4470、摩根大通3600,區間1800-6600元離散度83%,顯示估值錨高度不確定。技術面為五檔最強(唯一1w uptrend且suggested 74),但前瞻PE約100倍為五檔最貴。籌碼:融資由2195降至2058張(-6.2%)。",
+      "category": "revenue",
+      "impact": "bullish",
+      "source_url": "https://ec.ltn.com.tw/article/breakingnews/5420638",
+      "id": "0e040f5b831e",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
       "symbol": "00632R.TW",
       "date": "2026-08-06",
       "title": "槓桿反向 ETF 交易需三大資格,使用者現有持倉皆為現股恐未滿足",
@@ -28,6 +282,21 @@
       "logged_at": "2026-08-06T15:40:44Z",
       "reports": [
         "2026-08-06_0050-00632R-pair_Q5.md"
+      ]
+    },
+    {
+      "symbol": "3413.TW",
+      "date": "2026-08-06",
+      "title": "機構意見分歧:外資連4買(8/6 +499,020股)但投信單日賣超218,000股",
+      "description": "fetch_chips官方A級數據:外資8/4 +685,832、8/5 +206,037、8/6 +499,020股(連4買);投信8/6 -218,000股;自營商+4,538;融資餘額4,133→3,882張(-251,-6.1%),融券6張(-1)。外資連買與股價自325跌至309背離,構成多空對辯的核心爭點:多方視為承接,空方視為被動部位且真實賣壓來自投信。",
+      "category": "chips",
+      "impact": "neutral",
+      "source_url": "https://www.twse.com.tw/",
+      "id": "e86a21adffef",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
       ]
     },
     {
@@ -154,6 +423,34 @@
       "logged_at": "2026-08-06T15:40:44Z",
       "reports": [
         "2026-08-06_0050-00632R-pair_Q5.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-06",
+      "title": "7月營收10.33億元,YoY +38.19%,基本面證偽條件遭反向擊破",
+      "description": "2026年7月合併營收1,033,409仟元,MoM +35.34%、YoY +38.19%(6月為YoY +0.43%)。2026-08-06報告事前設定的失效條件為「8/10前7月營收YoY < +5%則基本面證偽」,實際值遠超門檻,證偽條件永久排除,自7/13起壓抑評分的「動能減速」論據正式失效。消息面60→75、基本面72→78,推薦指數60→67。",
+      "category": "revenue",
+      "impact": "bullish",
+      "source_url": "https://tw.stock.yahoo.com/quote/3030.TW/revenue",
+      "id": "522a5bb652ae",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-06",
+      "title": "MOPS官方公告7月自結損益:單月EPS 1.51元、累計EPS 8.87元",
+      "description": "重大訊息第51款(A級一手):當月稅後淨利357,439仟元、當月每股稅後盈餘1.51元;累計稅後淨利2,095,949仟元、累計每股稅後盈餘8.87元(H1 7.36 + 7月1.51 = 8.87,數字自洽)。7月單月EPS高於Q2單季3.86的月均1.29(+17%),獲利動能加速。自結數未經會計師核閱。",
+      "category": "earnings",
+      "impact": "bullish",
+      "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
+      "id": "41a8c2cad981",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
       ]
     },
     {
@@ -3014,6 +3311,20 @@
       ]
     },
     {
+      "symbol": "2327.TW",
+      "date": "2026-07-08",
+      "title": "系統校準:國巨2026-07-08以long 59分推薦後excess -21.49%,為全系統最差一筆",
+      "description": "2026-07-08-2327.TW-q3給long 59分,判定RESOLVED_DIRECTIONAL:ret -21.10%、excess -21.49%、benchmark +0.39%,為全系統93筆預測中最差的一筆。當時thesis已明載「日線跌破月線回檔、日週背離、PE約71估值偏貴」——三個警訊全部看到卻仍給看多,錯誤本質是讓題材蓋過已識別的技術風險,與2026-07-23-2360.TW-q3(基本面82最高但技術面僅62仍給long,結果LOSS excess -12.03%)為同一種錯誤模式。本次2026-08-07-2327.TW-q4嚴格錨定compute_ta suggested 31取33不因題材上修,方向給neutral推薦51。",
+      "category": "other",
+      "impact": "bearish",
+      "source_url": null,
+      "id": "0738a476fd4b",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
       "symbol": "00981A.TW",
       "date": "2026-07-07",
       "title": "主動式 ETF 資金流反轉:受益人數連三週衰退、外資提款 8 檔",
@@ -4284,6 +4595,19 @@
       ]
     },
     {
+      "symbol": "6187.TWO",
+      "date": "2026-08-10",
+      "label": "萬潤7月營收公告截止(基本面失效條件觀察點)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "YoY < +40%則基本面降15分;累計YoY +35.97%為五檔最低,須觀察是否回升至>+45%",
+      "id": "3cd14cbbbe5f",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
       "symbol": "3413.TW",
       "date": "2026-08-10",
       "label": "京鼎 7 月營收公告截止(6 月 YoY +39.75% 創高後第一個驗證點)",
@@ -4294,6 +4618,19 @@
       "logged_at": "2026-08-04T11:26:25Z",
       "reports": [
         "2026-08-04_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-08-10",
+      "label": "國巨7月營收公告截止(基本面證偽觀察點)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "失效條件:7月營收YoY < +20%(6月為+38.91%)則基本面降至55以下",
+      "id": "410f70966880",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
       ]
     },
     {
@@ -4400,6 +4737,19 @@
       "reports": []
     },
     {
+      "symbol": "3030.TW",
+      "date": "2026-08-10",
+      "label": "7月營收官方版公告截止(核對是否與1,033,409仟元一致)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "自結EPS 1.51已於8/6揭露,官方確認風險大幅降低;TWSE OpenAPI t187ap05_L查詢時仍為6月版(出表日115/07/17)",
+      "id": "756481d15cc6",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
+    {
       "symbol": "0050.TW",
       "date": "2026-08-10",
       "label": "0050配息0.6元發放入帳",
@@ -4460,6 +4810,20 @@
       "logged_at": "2026-07-27T11:03:07Z",
       "reports": [
         "2026-07-27_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "3413.TW",
+      "date": "2026-08-10",
+      "label": "7月營收公告截止(基本面失效條件觀察點:YoY < +15%)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "6月為YoY +39.75%;若7月YoY < +15%則基本面降至45以下",
+      "id": "84d585baf357",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
       ]
     },
     {
@@ -4601,6 +4965,19 @@
       ]
     },
     {
+      "symbol": "3324.TWO",
+      "date": "2026-08-10",
+      "label": "雙鴻7月營收公告截止(動能轉折確認點)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "6月MoM -13.41%為五檔唯一月減;若7月MoM再度為負則自關注清單移除",
+      "id": "bf4360355681",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
       "symbol": "3413.TW",
       "date": "2026-08-10",
       "label": "7 月營收公告截止(基本面失效條件觀察點)",
@@ -4705,6 +5082,19 @@
       ]
     },
     {
+      "symbol": "8299.TWO",
+      "date": "2026-08-10",
+      "label": "7月營收公告截止(五檔存活者全適用)",
+      "date_type": "revenue_release",
+      "status": "confirmed",
+      "note": "萬潤失效條件:7月營收YoY < +40%(6月為+87.06%)則基本面降15分;雙鴻:MoM再度為負則確認動能轉折",
+      "id": "ff2028481516",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
       "symbol": "3030.TW",
       "date": "2026-08-12",
       "label": "Q4 情境樹觀察期滿(30 天):守 293 / 表態 302",
@@ -4796,6 +5186,58 @@
       ]
     },
     {
+      "symbol": "6187.TWO",
+      "date": "2026-08-13",
+      "label": "AMAT fiscal Q3財報——封測設備需求連動",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "萬潤封測設備佔營收8-9成,對AMAT與晶圓廠資本支出高度敏感",
+      "id": "60fe270faf15",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2026-08-13",
+      "label": "AMAT fiscal Q3財報——致茂關鍵假設4的驗證點",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "失效條件:AMAT將2026設備業務指引由>30%下修 → 致茂宏觀面與消息面各降10分",
+      "id": "708171b57ad6",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-13",
+      "label": "群聯Q2合併財報董事會(MOPS官方公告日期)",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "失效條件觀察點:毛利率若低於50%(前季61.3%)則基本面降15分",
+      "id": "a24545f5744f",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-08-13",
+      "label": "AMAT fiscal Q3財報——半導體設備族群連動風險",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "德律非AMAT供應鏈,但族群連動性使其無法完全隔離;若下修2026設備支出展望則宏觀面下調",
+      "id": "b16a09b50c33",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
+    {
       "symbol": "3030.TW",
       "date": "2026-08-13",
       "label": "7/14 Q4 偏空預測觀察期限(30 天)",
@@ -4811,6 +5253,33 @@
     {
       "symbol": "3413.TW",
       "date": "2026-08-13",
+      "label": "AMAT fiscal Q3財報(美股盤後)——京鼎決定性二元事件",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "市場預估營收90億美元、EPS 3.36、YoY +23%;決定性變數為2026設備支出指引是否維持>30%。京鼎8-9成營收來自AMAT,賠率不對稱(AMAT好→小漲、AMAT差→重挫);8/13前不預掛回檔買單",
+      "id": "cc85b50c8134",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-13",
+      "label": "群聯Q2合併財報董事會+法說會(最關鍵驗證點)",
+      "date_type": "earnings_call",
+      "status": "confirmed",
+      "note": "關鍵觀察:毛利率能否守住55%(Q1為61.3%)、存貨721.99億是否開始下降。失效條件:毛利率<50%則基本面降15分方向重評。掛單紀律:8/13前最多只讓第1批1840成交,第2批1685待財報後再啟用",
+      "id": "e25a66392bae",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "3413.TW",
+      "date": "2026-08-13",
       "label": "應用材料(AMAT)fiscal Q3 財報(美股盤後,台灣 8/14 凌晨)",
       "date_type": "earnings_release",
       "status": "estimated",
@@ -4819,6 +5288,19 @@
       "logged_at": "2026-08-06T15:09:40Z",
       "reports": [
         "2026-08-06_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2026-08-13",
+      "label": "AMAT fiscal Q3財報(美股盤後)——半導體設備族群連動",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "失效條件:將2026設備業務成長指引由>30%下修(任何幅度)則致茂、萬潤消息面各降15分",
+      "id": "f3469f04445a",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
       ]
     },
     {
@@ -4845,6 +5327,19 @@
       "logged_at": "2026-07-15T03:37:32Z",
       "reports": [
         "2026-07-15_0050-00918-3030_Q4.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-08-14",
+      "label": "台股Q2財報公告截止(國巨、致茂、群聯全適用)",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "三檔信心指數皆已計入-5;致茂觀察毛利率是否守住60%(關鍵假設2)",
+      "id": "468fa9c5b1b4",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
       ]
     },
     {
@@ -4894,6 +5389,19 @@
       "logged_at": "2026-07-16T04:30:26Z",
       "reports": [
         "2026-07-16_3030-TW_Q6.md"
+      ]
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2026-08-14",
+      "label": "台股上市櫃Q2財報公告截止(五檔存活者全適用)",
+      "date_type": "earnings_release",
+      "status": "confirmed",
+      "note": "horizon內二元事件,已計入五檔信心指數-5;失效條件:任一檔EPS低於市場預估20%以上則基本面降15分",
+      "id": "f8e3fcc9a3d9",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
       ]
     },
     {
@@ -5087,6 +5595,19 @@
       "logged_at": "2026-07-21T15:55:51Z",
       "reports": [
         "2026-07-21_daily-summary_Q6.md"
+      ]
+    },
+    {
+      "symbol": "8299.TWO",
+      "date": "2026-08-21",
+      "label": "Q3篩選預測horizon到期(14天)——漏斗有效性第二次檢驗",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "本次入選5檔(8299/2360/2383/6187/3324)與淘汰5檔(6488/2327/3532/5347/3529)全數記錄預測;若淘汰組平均超額報酬再度高於入選組,視為Q3漏斗負edge的第二次確認,應停用本流程並改寫scoring-rubric的Q3權重",
+      "id": "17b2e36ca42a",
+      "logged_at": "2026-08-07T05:31:26Z",
+      "reports": [
+        "2026-08-07_TW-semi-equipment-screener_Q3.md"
       ]
     },
     {
@@ -5559,6 +6080,20 @@
       ]
     },
     {
+      "symbol": "3413.TW",
+      "date": "2026-09-05",
+      "label": "預測horizon到期(2026-08-06-3413.TW-q6,30天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "neutral @320.00,減碼325.00/停損收破310.07;本日沿用不記新預測",
+      "id": "77d07e901dcc",
+      "logged_at": "2026-08-07T04:11:08Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md",
+        "2026-08-07_3413-TW_Q6.md"
+      ]
+    },
+    {
       "symbol": "3030.TW",
       "date": "2026-09-05",
       "label": "德律 2026-08-06 Q6_daily 預測 horizon 到期(30 天)",
@@ -5585,6 +6120,19 @@
       ]
     },
     {
+      "symbol": "3030.TW",
+      "date": "2026-09-05",
+      "label": "預測horizon到期(2026-08-06-3030.TW-q6,30天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "long @295.50,買281.50/SL 271.00/TP 302.00,313.00;本日沿用不記新預測",
+      "id": "c6124d1733c4",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
+      ]
+    },
+    {
       "symbol": "00632R.TW",
       "date": "2026-09-06",
       "label": "本報告失效條件觀察期限(30 天)",
@@ -5595,6 +6143,32 @@
       "logged_at": "2026-08-06T16:16:49Z",
       "reports": [
         "2026-08-07_00632R-TW_Q1.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-09-06",
+      "label": "國巨Q4點位分析horizon到期(30天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "2026-08-07-2327.TW-q4,neutral @540.00,掛單456.50(R:R 1.83,SL 306.00,TP 732.00)",
+      "id": "ed5c497735b2",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "3030.TW",
+      "date": "2026-09-10",
+      "label": "8月營收公告(新設證偽條件:YoY < +10%)",
+      "date_type": "revenue_release",
+      "status": "estimated",
+      "note": "取代已被擊破的7月營收證偽條件;若8月YoY < +10%,則證明7月+38.19%係6月遞延出貨而非需求加速(空方論點3成立),消息面與基本面各降15分。推估基礎為月營收公告慣例為次月10日前",
+      "id": "2458f80ba86f",
+      "logged_at": "2026-08-07T04:04:58Z",
+      "reports": [
+        "2026-08-07_3030-TW_Q6.md"
       ]
     },
     {
@@ -5621,6 +6195,19 @@
       "logged_at": "2026-07-27T13:55:09Z",
       "reports": [
         "2026-07-27_2634-TW_Q2.md"
+      ]
+    },
+    {
+      "symbol": "2327.TW",
+      "date": "2026-09-30",
+      "label": "國巨公開收購日本芝浦電子預計完成(Q3內,成為100%子公司)",
+      "date_type": "news_release",
+      "status": "estimated",
+      "note": "自2026/5/9起以每股6200日圓公開收購,期間數度延長。失效條件:未能於Q3完成或條件變更則消息面降10分。完成後合併報表與商譽影響須重評。推估日期為Q3最後一日",
+      "id": "fbcba183cd42",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
       ]
     },
     {
@@ -5858,6 +6445,32 @@
       ]
     },
     {
+      "symbol": "8299.TWO",
+      "date": "2027-02-03",
+      "label": "群聯Q2長期持有horizon到期(180天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "2026-08-07-8299.TWO-q2,long @2020.00,合理估值區間1800-2400,掛單1840與1685",
+      "id": "63994ba89318",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2027-02-03",
+      "label": "致茂Q2長期持有horizon到期(180天)",
+      "date_type": "horizon_end",
+      "status": "confirmed",
+      "note": "2026-08-07-2360.TW-q2,long @2030.00,合理估值區間1646-2057(現價第93百分位),掛單1850(SL 1683)",
+      "id": "e1f533aa1f12",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
+    },
+    {
       "symbol": "2634.TW",
       "date": "2027-03-31",
       "label": "漢翔 2026 全年財報(失效條件:全年 EPS < 1.20 元 或 全年毛利率未回升至 10% 以上)",
@@ -5891,6 +6504,19 @@
       "id": "1799bf58b287",
       "logged_at": "2026-07-23T05:27:15Z",
       "reports": []
+    },
+    {
+      "symbol": "2360.TW",
+      "date": "2027-12-31",
+      "label": "致茂CPO測試設備預計進入量產(Insertion 3成最大量區)",
+      "date_type": "product_launch",
+      "status": "estimated",
+      "note": "12個月論點核心,亦為野村CAGR 39%的主要依據。Insertion 4已於2026年6月試產。失效條件:公司公告量產時程遞延則消息面降15分。推估日期為2027年底",
+      "id": "c39f7bbf0657",
+      "logged_at": "2026-08-07T06:10:19Z",
+      "reports": [
+        "2026-08-07_8299-TWO_Q2.md"
+      ]
     }
   ]
 }
